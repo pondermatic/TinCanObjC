@@ -19,7 +19,7 @@
  limitations under the License.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "TestSemaphor.h"
 #import "RSTinCanConnector.h"
 #import "TCLocalizedValues.h"
@@ -29,6 +29,6 @@
 #import "TCState.h"
 #import "TCStatementCollection.h"
 
-@interface RSTCAPITests : SenTestCase
+@interface RSTCAPITests : XCTestCase
 
 @end

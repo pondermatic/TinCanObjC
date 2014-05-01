@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Rustici Software. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import <UIKit/UIKit.h>
 #import "TestSemaphor.h"
 #import "RSTinCanConnector.h"
@@ -22,6 +22,6 @@
 #import "TCContext.h"
 
 
-@interface RSTCAPI_1_0_0_Tests : SenTestCase
+@interface RSTCAPI_1_0_0_Tests : XCTestCase
 
 @end

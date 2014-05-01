@@ -59,7 +59,7 @@
 - (void)testSaveStatement
 {
 
-    STAssertNotNil(tincan, @"tincan is not nill");
+    XCTAssertNotNil(tincan, @"tincan is not nill");
     
     NSMutableDictionary *statementOptions = [[NSMutableDictionary alloc] init];
     [statementOptions setValue:@"http://tincanapi.com/test" forKey:@"activityId"];
@@ -73,7 +73,7 @@
     }withErrorBlock:^(TCError *error){
 
         NSLog(@"ERROR: %@", error.localizedDescription);
-        STAssertNil(error, @"There was no error with the request");
+        XCTAssertNil(error, @"There was no error with the request");
         [[TestSemaphor sharedInstance] lift:@"saveStatement"];
     }];
     
@@ -83,7 +83,7 @@
 - (void)testSaveStatements
 {
 
-    STAssertNotNil(tincan, @"tincan is not nill");
+    XCTAssertNotNil(tincan, @"tincan is not nill");
     
     TCStatementCollection *statementArray = [[TCStatementCollection alloc] init];
     
@@ -120,7 +120,7 @@
     }withErrorBlock:^(TCError *error){
         
         NSLog(@"ERROR: %@", error.localizedDescription);
-        STAssertNil(error, @"There was no error with the request");
+        XCTAssertNil(error, @"There was no error with the request");
         [[TestSemaphor sharedInstance] lift:@"saveStatements"];
     }];
     
@@ -130,7 +130,7 @@
 - (void)testGetStatement
 {
     
-    STAssertNotNil(tincan, @"tincan is not nill");
+    XCTAssertNotNil(tincan, @"tincan is not nill");
     
     [tincan getStatementWithId:@"4d44e635-b8c5-4eed-9695-eb7cc95e7c1a" withOptions:nil
            withCompletionBlock:^(TCStatement *statement){
@@ -147,7 +147,7 @@
 - (void)testGetStatements
 {
 
-    STAssertNotNil(tincan, @"tincan is not nill");
+    XCTAssertNotNil(tincan, @"tincan is not nill");
     
     TCVerb *verb = [[TCVerb alloc] initWithId:@"http://adlnet.gov/expapi/verbs/experienced" withVerbDisplay:[[TCLocalizedValues alloc] initWithLanguageCode:@"en-US" withValue:@"experienced"]];
     
@@ -156,10 +156,10 @@
     [tincan getStatementsWithOptions:queryOptions withCompletionBlock:^(NSArray *statementArray){
         NSLog(@"statementArray %@", statementArray);
         NSLog(@"found %d statements", statementArray.count);
-        STAssertNotNil(statementArray, @"statements were returned");
+        XCTAssertNotNil(statementArray, @"statements were returned");
         [[TestSemaphor sharedInstance] lift:@"getStatements"];
     }withErrorBlock:^(TCError *error){
-        STAssertNil(error, @"There was no error with the request");
+        XCTAssertNil(error, @"There was no error with the request");
         NSLog(@"ERROR: %@", error.localizedDescription);
         [[TestSemaphor sharedInstance] lift:@"getStatements"];
     }];
