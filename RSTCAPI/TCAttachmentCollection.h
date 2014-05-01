@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *attachmentArray;
 
 - (id) init;
-- (int) count;
+- (NSUInteger) count;
 - (TCAttachment *)attachmentAtIndex:(int)index;
 - (void)addAttachment:(TCAttachment *)attachement;
 - (NSArray *) array;

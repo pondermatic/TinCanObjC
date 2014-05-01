@@ -25,7 +25,7 @@
     [_attachmentArray addObject:attachement];
 }
 
-- (int) count
+- (NSUInteger) count
 {
     return _attachmentArray.count;
 }

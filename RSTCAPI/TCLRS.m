@@ -69,7 +69,7 @@
     
     NSString *requestString = [NSString stringWithFormat:@"%@", [statement JSONString], nil];
     NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%d", [requestData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
 
     NSLog(@"statement JSON %@", [statement JSONString]);
     
@@ -95,7 +95,7 @@
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        NSLog(@"HTTP response code: %i", httpResponse.statusCode);
+        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
 
         if(httpResponse.statusCode == 204){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -133,7 +133,7 @@
     NSString *requestString = [NSString stringWithFormat:@"%@", [statementArray JSONString], nil];
     NSLog(@"saveStatements requestString %@", requestString);
     NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%d", [requestData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
     
     
     [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
@@ -152,7 +152,7 @@
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        NSLog(@"HTTP response code: %i", httpResponse.statusCode);
+        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
         
         if(httpResponse.statusCode == 200){
             NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -329,7 +329,7 @@
         NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"saveStateWithValue - %@", responseStr);
         
-        NSLog(@"HTTP response code: %i", httpResponse.statusCode);
+        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
         
         id state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
@@ -376,7 +376,7 @@
     // create JSON for body
     NSString *requestString = [NSString stringWithFormat:@"%@", [state JSONString], nil];
     NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%d", [requestData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
     
     
     [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
@@ -398,7 +398,7 @@
         NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"saveStateWithValue - %@", responseStr);
         
-        NSLog(@"HTTP response code: %i", httpResponse.statusCode);
+        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
         
         if(httpResponse.statusCode == 204){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -454,7 +454,7 @@
         NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"saveStateWithValue - %@", responseStr);
         
-        NSLog(@"HTTP response code: %i", httpResponse.statusCode);
+        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
         
         if(httpResponse.statusCode == 204){
             dispatch_async(dispatch_get_main_queue(), ^{
