@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D3DBF13C16E02D8D008661C7"
-               BuildableName = "RSTCAPITests.octest"
+               BuildableName = "RSTCAPITests.xctest"
                BlueprintName = "RSTCAPITests"
                ReferencedContainer = "container:RSTCAPI.xcodeproj">
             </BuildableReference>
