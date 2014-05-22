@@ -29,6 +29,6 @@
 - (id)initWithDictionary:(NSDictionary *)activityDictionary;
 - (NSDictionary *)dictionary;
 
-- (NSString *) JSONString;
+- (NSString *)JSONString;
 
 @end

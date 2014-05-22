@@ -23,7 +23,7 @@
 
 @interface TCError : NSError
 
-- (id) initWithMessage:(NSString *)message;
+- (id)initWithMessage:(NSString *)message;
 
 @end
 

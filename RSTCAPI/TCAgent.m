@@ -53,17 +53,17 @@
 		NSString *agentMbox = [agentDict objectForKey:@"mbox"];
 		NSMutableDictionary *accountDict = [agentDict objectForKey:@"account"];
 		
-		if(agentName)
+		if (agentName)
 		{
 			_name = agentName;
 		}
 		
-		if(agentMbox)
+		if (agentMbox)
 		{
 			_mbox = agentMbox;
 		}
 		
-		if(accountDict)
+		if (accountDict)
 		{
 			_accountDict = accountDict;
 		}
@@ -79,17 +79,17 @@
 		NSString *agentMbox = [agentDictionary objectForKey:@"mbox"];
 		NSMutableDictionary *accountDict = [agentDictionary objectForKey:@"account"];
 		
-		if(agentName)
+		if (agentName)
 		{
 			_name = agentName;
 		}
 		
-		if(agentMbox)
+		if (agentMbox)
 		{
 			_mbox = agentMbox;
 		}
 		
-		if(accountDict)
+		if (accountDict)
 		{
 			_accountDict = accountDict;
 		}
@@ -107,7 +107,7 @@
 	return [_actorDict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

@@ -30,13 +30,13 @@
 
 @implementation TCError
 
-- (id) initWithMessage:(NSString *)message
+- (id)initWithMessage:(NSString *)message
 {
-	_message = [NSString stringWithFormat:@"%@",message];
+	_message = [NSString stringWithFormat:@"%@", message];
 	return self;
 }
 
-- (NSString *) localizedDescription
+- (NSString *)localizedDescription
 {
 	return _message;
 }

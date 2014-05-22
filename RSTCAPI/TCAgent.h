@@ -28,5 +28,5 @@
 - (id)initWithJSON:(NSString *)agentJSON;
 - (id)initWithDictionary:(NSDictionary *)agentDictionary;
 - (NSDictionary *)dictionary;
-- (NSString *) JSONString;
+- (NSString *)JSONString;
 @end

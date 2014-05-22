@@ -32,7 +32,7 @@
 
 @implementation TCVerb
 
-- (id) initWithId:(NSString *)verbId withVerbDisplay:(TCLocalizedValues *)display
+- (id)initWithId:(NSString *)verbId withVerbDisplay:(TCLocalizedValues *)display
 {
 	if ((self = [super init])) {
 		_verbId = verbId;
@@ -41,7 +41,7 @@
 	return self;
 }
 
-- (id) initWithJSON:(NSString *)verbJSON
+- (id)initWithJSON:(NSString *)verbJSON
 {
 	if ((self = [super init])) {
 		NSError* error;
@@ -50,12 +50,12 @@
 		NSString *verbId = [verbDict objectForKey:@"id"];
 		TCLocalizedValues *verbDisplay = [[TCLocalizedValues alloc] initWithDictionary:[verbDict objectForKey:@"display"]];
 		
-		if(verbId)
+		if (verbId)
 		{
 			_verbId = verbId;
 		}
 		
-		if(verbDisplay)
+		if (verbDisplay)
 		{
 			_display = verbDisplay;
 		}
@@ -63,7 +63,7 @@
 	return self;
 }
 
-- (id) initWithDictionary:(NSDictionary *)verbDictionary
+- (id)initWithDictionary:(NSDictionary *)verbDictionary
 {
 	if ((self = [super init])) {
 		_verbId = [verbDictionary objectForKey:@"id"];
@@ -80,7 +80,7 @@
 	return [_verbDict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

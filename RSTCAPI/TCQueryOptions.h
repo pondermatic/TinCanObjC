@@ -27,9 +27,9 @@
 
 @interface TCQueryOptions : NSObject
 
-- (id) initWithActor:(TCAgent *)agent withVerb:(TCVerb *)verb withTarget:(NSObject *)target withInstructor:(TCAgent *)instructor withRegistration:(NSString *)registration withContext:(BOOL)useContext withSince:(NSString *)since withUntil:(NSString *)until withLimit:(NSNumber *)limit withAuthoritative:(BOOL)authoritative withSparse:(BOOL)sparse withAscending:(BOOL)ascending;
+- (id)initWithActor:(TCAgent *)agent withVerb:(TCVerb *)verb withTarget:(NSObject *)target withInstructor:(TCAgent *)instructor withRegistration:(NSString *)registration withContext:(BOOL)useContext withSince:(NSString *)since withUntil:(NSString *)until withLimit:(NSNumber *)limit withAuthoritative:(BOOL)authoritative withSparse:(BOOL)sparse withAscending:(BOOL)ascending;
 
 
-- (NSString *) querystring;
+- (NSString *)querystring;
 
 @end

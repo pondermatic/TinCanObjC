@@ -34,7 +34,7 @@
 @synthesize dataString = _dataString;
 
 
-- (id) initWithSha2:(NSString *)sha2 withDataString:(NSString *)dataString withUsageType:(NSString *)usageType withContentType:(NSString *)contentType withContentTransferEncoding:(NSString *)contentTransferEncoding withDisplay:(TCLocalizedValues *)display withDescription:(TCLocalizedValues *)description withLength:(NSNumber *)length withFileUrl:(NSString *)fileUrl
+- (id)initWithSha2:(NSString *)sha2 withDataString:(NSString *)dataString withUsageType:(NSString *)usageType withContentType:(NSString *)contentType withContentTransferEncoding:(NSString *)contentTransferEncoding withDisplay:(TCLocalizedValues *)display withDescription:(TCLocalizedValues *)description withLength:(NSNumber *)length withFileUrl:(NSString *)fileUrl
 {
 	if ((self = [super init])) {
 		_sha2 = sha2;
@@ -50,7 +50,7 @@
 	return self;
 }
 
-- (NSDictionary *) dictionary
+- (NSDictionary *)dictionary
 {
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	[dict setValue:_sha2 forKey:@"sha2"];
@@ -59,18 +59,18 @@
 	[dict setValue:_contentType forKey:@"contentType"];
 //	[dict setValue:_contentTransferEncoding forKey:@"contentTransferEncoding"];
 	[dict setValue:[_display dictionary] forKey:@"display"];
-	if(_description){
+	if (_description) {
 		[dict setValue:[_description dictionary] forKey:@"description"];
 	}
 	[dict setValue:_length forKey:@"length"];
-	if(_fileUrl){
+	if (_fileUrl) {
 		[dict setValue:_fileUrl forKey:@"fileUrl"];
 	}
 	NSLog(@"%@", dict);
 	return [dict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

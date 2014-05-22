@@ -25,12 +25,12 @@
 @interface TCLocalizedValues : NSObject
 
 
-- (id) initWithLanguageCode:(NSString *)languageCode withValue:(NSString *)value;
-- (id) initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithLanguageCode:(NSString *)languageCode withValue:(NSString *)value;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 
-- (void) addLocalizedValue:(NSString *)value withLanguageCode:(NSString *)languageCode;
+- (void)addLocalizedValue:(NSString *)value withLanguageCode:(NSString *)languageCode;
 
-- (NSString *) JSONString;
-- (NSDictionary *) dictionary;
+- (NSString *)JSONString;
+- (NSDictionary *)dictionary;
 
 @end

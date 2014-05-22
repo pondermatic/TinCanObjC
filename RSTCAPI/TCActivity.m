@@ -62,7 +62,7 @@
 	return [_activityDict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

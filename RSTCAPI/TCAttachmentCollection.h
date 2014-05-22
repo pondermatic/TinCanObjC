@@ -13,11 +13,11 @@
 
 @property (nonatomic, strong) NSMutableArray *attachmentArray;
 
-- (id) init;
-- (NSUInteger) count;
+- (id)init;
+- (NSUInteger)count;
 - (TCAttachment *)attachmentAtIndex:(int)index;
 - (void)addAttachment:(TCAttachment *)attachement;
-- (NSArray *) array;
-- (NSString *) JSONString;
+- (NSArray *)array;
+- (NSString *)JSONString;
 
 @end

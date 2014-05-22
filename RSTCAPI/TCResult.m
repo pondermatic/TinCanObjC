@@ -24,7 +24,7 @@
 
 @implementation TCResult
 
-- (id) initWithResponse:(NSString *)response withScore:(NSDictionary *)scoreDict withSuccess:(NSNumber *)success withCompletion:(NSNumber *)completion withDuration:(NSString *)duration withExtensions:(NSDictionary *)extensions
+- (id)initWithResponse:(NSString *)response withScore:(NSDictionary *)scoreDict withSuccess:(NSNumber *)success withCompletion:(NSNumber *)completion withDuration:(NSString *)duration withExtensions:(NSDictionary *)extensions
 {
 	if ((self = [super init])) {
 		_response = response;
@@ -38,7 +38,7 @@
 }
 
 
-- (id) initWithDictionary:(NSDictionary *)resultDictionary
+- (id)initWithDictionary:(NSDictionary *)resultDictionary
 {
 	if ((self = [super init])) {
 		
@@ -49,32 +49,32 @@
 		NSString *resultDuration = [resultDictionary objectForKey:@"duration"];
 		NSDictionary *resultExtensions = [resultDictionary objectForKey:@"extensions"];
 		
-		if(resultResponse)
+		if (resultResponse)
 		{
 			_response = resultResponse;
 		}
 		
-		if(resultScore)
+		if (resultScore)
 		{
 			_score = resultScore;
 		}
 		
-		if(resultSuccess)
+		if (resultSuccess)
 		{
 			_success = resultSuccess;
 		}
 		
-		if(resultCompletion)
+		if (resultCompletion)
 		{
 			_completion = resultCompletion;
 		}
 		
-		if(resultDuration)
+		if (resultDuration)
 		{
 			_duration = resultDuration;
 		}
 		
-		if(resultExtensions)
+		if (resultExtensions)
 		{
 			_extensions = resultExtensions;
 		}
@@ -94,7 +94,7 @@
 	return [_resultDict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

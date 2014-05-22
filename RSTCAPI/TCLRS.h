@@ -40,7 +40,7 @@
  @param {Object} [cfg] Configuration used when saving
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStatement:(TCStatement *)statement withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)saveStatement:(TCStatement *)statement withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Save a set of statements, when used from a browser sends to the endpoint using the RESTful interface.
@@ -51,7 +51,7 @@
  @param {Object} [cfg] Configuration used when saving
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Retrieve a statement, when used from a browser sends to the endpoint using the RESTful interface.
@@ -62,7 +62,7 @@
  @param {Function} [cfg.callback] Callback to execute on completion
  @return {Object} TinCan.Statement retrieved
  */
-- (void) retrieveStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)retrieveStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Fetch a set of statements, when used from a browser sends to the endpoint using the
@@ -88,7 +88,7 @@
  @param {TinCan.StatementsResult|XHR} cfg.callback.response Receives a StatementsResult argument
  @return {Object} Request result
  */
-- (void) queryStatementsWithOptions:(TCQueryOptions *)queryOptions withCompletionBlock:(void (^)(NSArray *))completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)queryStatementsWithOptions:(TCQueryOptions *)queryOptions withCompletionBlock:(void (^)(NSArray *))completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Fetch more statements from a previous query, when used from a browser sends to the endpoint using the
@@ -102,7 +102,7 @@
  @param {TinCan.StatementsResult|XHR} cfg.callback.response Receives a StatementsResult argument
  @return {Object} Request result
  */
--(void) moreStatements:(NSDictionary *)options withMoreUrl:(NSString *)moreUrl withCompletionBlock:(void (^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)moreStatements:(NSDictionary *)options withMoreUrl:(NSString *)moreUrl withCompletionBlock:(void (^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Retrieve a state value, when used from a browser sends to the endpoint using the RESTful interface.
@@ -118,7 +118,7 @@
  @param {TinCan.State|null} cfg.callback.result null if state is 404
  @return {Object} TinCan.State retrieved when synchronous, or result from sendRequest
  */
-- (void) retrieveStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)retrieveStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Save a state value, when used from a browser sends to the endpoint using the RESTful interface.
@@ -133,7 +133,7 @@
  @param {String} [cfg.lastSHA1] SHA1 of the previously seen existing state
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStateWithValue:(NSDictionary*)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withLastSHA1:(NSString *)lastSHA1 withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)saveStateWithValue:(NSDictionary*)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withLastSHA1:(NSString *)lastSHA1 withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Drop a state value or all of the state, when used from a browser sends to the endpoint using the RESTful interface.
@@ -146,7 +146,7 @@
  @param {String} [cfg.registration] Registration
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) dropStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)dropStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Retrieve an activity profile value, when used from a browser sends to the endpoint using the RESTful interface.
@@ -158,7 +158,7 @@
  @param {Function} [cfg.callback] Callback to execute on completion
  @return {Object} Value retrieved
  */
-- (void) retrieveActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)retrieveActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Save an activity profile value, when used from a browser sends to the endpoint using the RESTful interface.
@@ -170,7 +170,7 @@
  @param {String} [cfg.lastSHA1] SHA1 of the previously seen existing profile
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveActivityProfileWithValue:(NSDictionary *)profile forKey:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)saveActivityProfileWithValue:(NSDictionary *)profile forKey:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Drop an activity profile value or all of the activity profile, when used from a browser sends to the endpoint using the RESTful interface.
@@ -181,6 +181,6 @@
  @param {Object} cfg.activity TinCan.Activity
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) dropActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)dropActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 @end

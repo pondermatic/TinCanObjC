@@ -31,7 +31,7 @@
 @implementation TCLocalizedValues
 
 
-- (id) initWithLanguageCode:(NSString *)languageCode withValue:(NSString *)value
+- (id)initWithLanguageCode:(NSString *)languageCode withValue:(NSString *)value
 {
 	if ((self = [super init])) {
 		_localizedValues = [[NSMutableDictionary alloc] init];
@@ -40,7 +40,7 @@
 	return self;
 }
 
-- (id) initWithDictionary:(NSDictionary *)dictionary
+- (id)initWithDictionary:(NSDictionary *)dictionary
 {
 	if ((self = [super init])) {
 		_localizedValues = [dictionary mutableCopy];
@@ -48,17 +48,17 @@
 	return self;
 }
 
-- (void) addLocalizedValue:(NSString *)value withLanguageCode:(NSString *)languageCode
+- (void)addLocalizedValue:(NSString *)value withLanguageCode:(NSString *)languageCode
 {
 	[_localizedValues setValue:value forKey:languageCode];
 }
 
-- (NSDictionary *) dictionary
+- (NSDictionary *)dictionary
 {
 	return [_localizedValues copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_localizedValues

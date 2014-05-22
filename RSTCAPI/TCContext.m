@@ -47,7 +47,7 @@
 	return self;
 }
 
-- (id) initWithDictionary:(NSDictionary *)contextDictionary
+- (id)initWithDictionary:(NSDictionary *)contextDictionary
 {
 	if ((self = [super init])) {
 		
@@ -57,27 +57,27 @@
 		NSDictionary *contextActivities = [contextDictionary objectForKey:@"contextActivities"];
 		NSDictionary *contextExtensions = [contextDictionary objectForKey:@"extensions"];
 		
-		if(contextRegistration)
+		if (contextRegistration)
 		{
 			_registration = contextRegistration;
 		}
 		
-		if(contextInstructor)
+		if (contextInstructor)
 		{
 			_instructor = contextInstructor;
 		}
 		
-		if(contextTeam)
+		if (contextTeam)
 		{
 			_team = contextTeam;
 		}
 		
-		if(contextActivities)
+		if (contextActivities)
 		{
 			_contextActivities = contextActivities;
 		}
 		
-		if(contextExtensions)
+		if (contextExtensions)
 		{
 			_extensions = contextExtensions;
 		}
@@ -94,7 +94,7 @@
 	return [_contextDict copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]

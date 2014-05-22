@@ -12,7 +12,7 @@
 
 @synthesize attachmentArray = _attachmentArray;
 
-- (id) init
+- (id)init
 {
 	if ((self = [super init])) {
 		_attachmentArray = [[NSMutableArray alloc] init];
@@ -20,12 +20,12 @@
 	return self;
 }
 
-- (void) addAttachment:(TCAttachment *)attachement
+- (void)addAttachment:(TCAttachment *)attachement
 {
 	[_attachmentArray addObject:attachement];
 }
 
-- (NSUInteger) count
+- (NSUInteger)count
 {
 	return _attachmentArray.count;
 }
@@ -35,22 +35,22 @@
 	return [_attachmentArray objectAtIndex:index];
 }
 
-- (NSArray *) array
+- (NSArray *)array
 {
 	NSMutableArray *output = [[NSMutableArray alloc] init];
 	
-	for (int i = 0; i<_attachmentArray.count; i++) {
+	for (int i = 0; i < _attachmentArray.count; i++) {
 		[output addObject:[[self attachmentAtIndex:i] dictionary] ];
 	}
 	
 	return [output copy];
 }
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSMutableString *output = [[NSMutableString alloc] init];
 	[output appendFormat:@"["];
-	for (int i=0; i < _attachmentArray.count; i++) {
+	for (int i = 0; i < _attachmentArray.count; i++) {
 		TCAttachment *attachment = (TCAttachment *)[_attachmentArray objectAtIndex:i];
 		[output appendFormat:@"%@", [attachment JSONString]];
 	}

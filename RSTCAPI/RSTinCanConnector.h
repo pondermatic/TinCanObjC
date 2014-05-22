@@ -33,7 +33,7 @@
  @method initWithOptions
  @param {NSDictionary} options for the connector
  */
-- (id) initWithOptions:(NSDictionary *)options;
+- (id)initWithOptions:(NSDictionary *)options;
 
 /**
  @method prepareStatement
@@ -41,7 +41,7 @@
  pre-created TinCan.Statement instance
  @return {TinCan.Statement}
  */
-- (void) prepareStatement:(TCStatement *)statementToPrepare withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)prepareStatement:(TCStatement *)statementToPrepare withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Calls saveStatement on each configured LRS, provide callback to make it asynchronous
@@ -50,7 +50,7 @@
  @param {TinCan.Statement|Object} statement Send statement to LRS
  @param {Function} [callback] Callback function to execute on completion
  */
-- (void) sendStatement:(TCStatement *)statementToSend withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)sendStatement:(TCStatement *)statementToSend withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Calls retrieveStatement on each configured LRS until it gets a result, provide callback to make it asynchronous
@@ -62,7 +62,7 @@
  
  TODO: make TinCan track statements it has seen in a local cache to be returned easily
  */
-- (void) getStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)getStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  Calls saveStatements with list of prepared statements
@@ -71,7 +71,7 @@
  @param {Array} Array of statements to send
  @param {Function} Callback function to execute on completion
  */
-- (void) sendStatements:(TCStatementCollection *)statementArray withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)sendStatements:(TCStatementCollection *)statementArray withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method getStatements
@@ -84,7 +84,7 @@
  
  TODO: support multiple LRSs and flag to use single
  */
-- (void) getStatementsWithOptions:(TCQueryOptions *)options withCompletionBlock:(void(^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)getStatementsWithOptions:(TCQueryOptions *)options withCompletionBlock:(void(^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method getState
@@ -98,7 +98,7 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) getStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)getStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method setState
@@ -113,7 +113,7 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) setStateWithValue:(NSDictionary *)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)setStateWithValue:(NSDictionary *)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method deleteState
@@ -127,7 +127,7 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) deleteStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)deleteStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method getActivityProfile
@@ -137,7 +137,7 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) getActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)getActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method setActivityProfile
@@ -148,7 +148,7 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) setActivityProfile:(NSString *)key withValue:(NSDictionary *)value withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)setActivityProfile:(NSString *)key withValue:(NSDictionary *)value withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 /**
  @method deleteActivityProfile
@@ -158,7 +158,7 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) deleteActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
+- (void)deleteActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock;
 
 
 @end

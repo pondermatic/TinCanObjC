@@ -12,7 +12,7 @@
 
 @synthesize flags;
 
-+(TestSemaphor *)sharedInstance
++ (TestSemaphor *)sharedInstance
 {
 	static TestSemaphor *sharedInstance = nil;
 	static dispatch_once_t once;
@@ -25,7 +25,7 @@
 	return sharedInstance;
 }
 
--(id)init
+- (id)init
 {
 	self = [super init];
 	if (self != nil) {
@@ -34,28 +34,27 @@
 	return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
 	self.flags = nil;
 }
 
--(BOOL)isLifted:(NSString*)key
+- (BOOL)isLifted:(NSString*)key
 {
-	return [self.flags objectForKey:key]!=nil;
+	return [self.flags objectForKey:key] != nil;
 }
 
--(void)lift:(NSString*)key
+- (void)lift:(NSString*)key
 {
 	[self.flags setObject:@"YES" forKey: key];
 }
 
--(void)waitForKey:(NSString*)key
+- (void)waitForKey:(NSString*)key
 {
 	BOOL keepRunning = YES;
 	while (keepRunning && [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1.0]]) {
 		keepRunning = ![[TestSemaphor sharedInstance] isLifted: key];
 	}
-	
 }
 
 @end

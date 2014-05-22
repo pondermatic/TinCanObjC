@@ -41,7 +41,7 @@
 
 @implementation TCQueryOptions
 
-- (id) initWithActor:(TCAgent *)actor withVerb:(TCVerb *)verb withTarget:(NSObject *)target withInstructor:(TCAgent *)instructor withRegistration:(NSString *)registration withContext:(BOOL)useContext withSince:(NSString *)since withUntil:(NSString *)until withLimit:(NSNumber *)limit withAuthoritative:(BOOL)authoritative withSparse:(BOOL)sparse withAscending:(BOOL)ascending
+- (id)initWithActor:(TCAgent *)actor withVerb:(TCVerb *)verb withTarget:(NSObject *)target withInstructor:(TCAgent *)instructor withRegistration:(NSString *)registration withContext:(BOOL)useContext withSince:(NSString *)since withUntil:(NSString *)until withLimit:(NSNumber *)limit withAuthoritative:(BOOL)authoritative withSparse:(BOOL)sparse withAscending:(BOOL)ascending
 {
 	if ((self = [super init])) {
 		_actor = actor;
@@ -60,11 +60,11 @@
 	return self;
 }
 
-- (NSString *) querystring
+- (NSString *)querystring
 {
 	NSMutableString *querystring = [[NSMutableString alloc] init];
 	
-	[querystring appendFormat:@"%@",@"?"];
+	[querystring appendFormat:@"%@", @"?"];
 	
 	
 	//add the BOOLs - the first one is after the '?' and will always be output
@@ -78,39 +78,41 @@
 	}
 	
 	if (_actor) {
-		[querystring appendFormat:@"&actor=%@",[[_actor JSONString] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+		[querystring appendFormat:@"&actor=%@", [[_actor JSONString] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
 	}
 	
 	if (_verb) {
-		[querystring appendFormat:@"&verb=%@",[TCUtil encodeURL:[[_verb dictionary] valueForKey:@"id"]]];
+		[querystring appendFormat:@"&verb=%@", [TCUtil encodeURL:[[_verb dictionary] valueForKey:@"id"]]];
 	}
 	
 	if (_instructor) {
-		[querystring appendFormat:@"&instructor=%@",[[_instructor JSONString] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+		[querystring appendFormat:@"&instructor=%@", [[_instructor JSONString] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
 	}
 	
 	if (_registration) {
-		[querystring appendFormat:@"&registration=%@",[_registration stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+		[querystring appendFormat:@"&registration=%@", [_registration stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
 	}
 	
 	if (_since) {
-		[querystring appendFormat:@"&since=%@",[_since stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+		[querystring appendFormat:@"&since=%@", [_since stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
 	}
 	
 	if (_until) {
-		[querystring appendFormat:@"&since=%@",[_until stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+		[querystring appendFormat:@"&since=%@", [_until stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
 	}
 	
 	if (_target) {
-		if (_target.class == TCAgent.class) {
-			[querystring appendFormat:@"&object=%@",[(TCAgent*)_target JSONString]];
+		if (_target.class == TCAgent.class)
+		{
+			[querystring appendFormat:@"&object=%@", [(TCAgent*)_target JSONString]];
 		}
 		else if (_target.class == TCActivity.class)
 		{
-			[querystring appendFormat:@"&object=%@",[(TCActivity*)_target JSONString]];
-		}else if (_target.class == TCStatement.class)
+			[querystring appendFormat:@"&object=%@", [(TCActivity*)_target JSONString]];
+		}
+		else if (_target.class == TCStatement.class)
 		{
-			[querystring appendFormat:@"&object=%@",[(TCStatement*)_target JSONString]];
+			[querystring appendFormat:@"&object=%@", [(TCStatement*)_target JSONString]];
 		}
 	}
 	

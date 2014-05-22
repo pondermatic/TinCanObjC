@@ -68,14 +68,15 @@
 	
 	TCStatement *statementToSend = [self createTestStatementWithOptions:statementOptions];
 	
-	[tincan sendStatement:statementToSend withCompletionBlock:^(){
-		[[TestSemaphor sharedInstance] lift:@"saveStatement"];
-	}withErrorBlock:^(TCError *error){
-		
-		NSLog(@"ERROR: %@", error.localizedDescription);
-		XCTAssertNil(error, @"There was no error with the request");
-		[[TestSemaphor sharedInstance] lift:@"saveStatement"];
-	}];
+	[tincan sendStatement:statementToSend
+	  withCompletionBlock:^() {
+		  [[TestSemaphor sharedInstance] lift:@"saveStatement"];
+	  }
+		   withErrorBlock:^(TCError *error) {
+			   NSLog(@"ERROR: %@", error.localizedDescription);
+			   XCTAssertNil(error, @"There was no error with the request");
+			   [[TestSemaphor sharedInstance] lift:@"saveStatement"];
+		   }];
 	
 	[[TestSemaphor sharedInstance] waitForKey:@"saveStatement"];
 }
@@ -115,14 +116,15 @@
 	TCStatement *statement4 = [self createTestStatementWithOptions:statement4Options];
 	[statementArray addStatement:statement4];
 	
-	[tincan sendStatements:statementArray withCompletionBlock:^(){
-		[[TestSemaphor sharedInstance] lift:@"saveStatements"];
-	}withErrorBlock:^(TCError *error){
-		
-		NSLog(@"ERROR: %@", error.localizedDescription);
-		XCTAssertNil(error, @"There was no error with the request");
-		[[TestSemaphor sharedInstance] lift:@"saveStatements"];
-	}];
+	[tincan sendStatements:statementArray
+	   withCompletionBlock:^() {
+		   [[TestSemaphor sharedInstance] lift:@"saveStatements"];
+	   }
+			withErrorBlock:^(TCError *error) {
+				NSLog(@"ERROR: %@", error.localizedDescription);
+				XCTAssertNil(error, @"There was no error with the request");
+				[[TestSemaphor sharedInstance] lift:@"saveStatements"];
+			}];
 	
 	[[TestSemaphor sharedInstance] waitForKey:@"saveStatement"];
 }
@@ -133,36 +135,38 @@
 	XCTAssertNotNil(tincan, @"tincan is not nill");
 	
 	[tincan getStatementWithId:@"4d44e635-b8c5-4eed-9695-eb7cc95e7c1a" withOptions:nil
-		   withCompletionBlock:^(TCStatement *statement){
+		   withCompletionBlock:^(TCStatement *statement) {
 			   NSLog(@"statement %@", statement);
 			   [[TestSemaphor sharedInstance] lift:@"getStatement"];
-		   }withErrorBlock:^(TCError *error){
-			   NSLog(@"ERROR: %@", error.localizedDescription);
-			   [[TestSemaphor sharedInstance] lift:@"getStatement"];
-		   }];
+		   }
+				withErrorBlock:^(TCError *error) {
+					NSLog(@"ERROR: %@", error.localizedDescription);
+					[[TestSemaphor sharedInstance] lift:@"getStatement"];
+				}];
 	
 	[[TestSemaphor sharedInstance] waitForKey:@"getStatement"];
 }
 
 - (void)testGetStatements
 {
-	
 	XCTAssertNotNil(tincan, @"tincan is not nill");
 	
 	TCVerb *verb = [[TCVerb alloc] initWithId:@"http://adlnet.gov/expapi/verbs/experienced" withVerbDisplay:[[TCLocalizedValues alloc] initWithLanguageCode:@"en-US" withValue:@"experienced"]];
 	
 	TCQueryOptions *queryOptions = [[TCQueryOptions alloc] initWithActor:[[TCAgent alloc] initWithName:nil withMbox:@"mailto:brian@tincanapi.com" withAccount:nil] withVerb:verb withTarget:nil withInstructor:nil withRegistration:nil withContext:YES withSince:@"2013-03-07" withUntil:nil withLimit:[NSNumber numberWithInt:2] withAuthoritative:NO withSparse:NO withAscending:NO];
 	
-	[tincan getStatementsWithOptions:queryOptions withCompletionBlock:^(NSArray *statementArray){
-		NSLog(@"statementArray %@", statementArray);
-		NSLog(@"found %d statements", statementArray.count);
-		XCTAssertNotNil(statementArray, @"statements were returned");
-		[[TestSemaphor sharedInstance] lift:@"getStatements"];
-	}withErrorBlock:^(TCError *error){
-		XCTAssertNil(error, @"There was no error with the request");
-		NSLog(@"ERROR: %@", error.localizedDescription);
-		[[TestSemaphor sharedInstance] lift:@"getStatements"];
-	}];
+	[tincan getStatementsWithOptions:queryOptions
+				 withCompletionBlock:^(NSArray *statementArray) {
+					 NSLog(@"statementArray %@", statementArray);
+					 NSLog(@"found %lu statements", (unsigned long)statementArray.count);
+					 XCTAssertNotNil(statementArray, @"statements were returned");
+					 [[TestSemaphor sharedInstance] lift:@"getStatements"];
+				 }
+					  withErrorBlock:^(TCError *error) {
+						  XCTAssertNil(error, @"There was no error with the request");
+						  NSLog(@"ERROR: %@", error.localizedDescription);
+						  [[TestSemaphor sharedInstance] lift:@"getStatements"];
+					  }];
 	
 	[[TestSemaphor sharedInstance] waitForKey:@"getStatements"];
 }
@@ -192,16 +196,14 @@
 }
 
 
-- (void) testQueryOptions
+- (void)testQueryOptions
 {
 	TCQueryOptions *options = [[TCQueryOptions alloc] initWithActor:[[TCAgent alloc] initWithName:@"Test User" withMbox:@"mailto:test@tincanapi.com" withAccount:nil] withVerb:[[TCVerb alloc] initWithId:@"http://adlnet.gov/exapi/verbs/attempted" withVerbDisplay:[[TCLocalizedValues alloc] initWithLanguageCode:@"en-US" withValue:@"attempted"]] withTarget:nil withInstructor:nil withRegistration:nil withContext:YES withSince:nil withUntil:nil withLimit:[NSNumber numberWithInt:25] withAuthoritative:NO withSparse:NO withAscending:NO];
 	NSLog(@"%@", [options querystring]);
 }
 
-- (void) testState
+- (void)testState
 {
-	
-	
 	TCAgent *actor = [[TCAgent alloc] initWithName:@"Brian Rogers" withMbox:@"mailto:brian@tincanapi.com" withAccount:nil];
 	
 	TCActivityDefinition *actDef = [[TCActivityDefinition alloc] initWithName:[[TCLocalizedValues alloc] initWithLanguageCode:@"en-US" withValue:@"http://tincanapi.com/test"]
@@ -215,37 +217,38 @@
 																   withTarget:nil
 																	withSteps:nil];
 	
-	
 	NSMutableDictionary *stateContents = [[NSMutableDictionary alloc] init];
 	[stateContents setValue:@"page 1" forKey:@"bookmark"];
 	
 	NSString *stateId = [TCUtil GetUUID];
 	
 	// put some state
-	[tincan setStateWithValue:stateContents withStateId:stateId withActivityId:[TCUtil encodeURL:@"http://tincanapi.com/test"] withAgent:actor withRegistration:nil withOptions:nil withCompletionBlock:^{
-		[[TestSemaphor sharedInstance] lift:@"saveState"];
-	}withErrorBlock:^(NSError *error){
-		[[TestSemaphor sharedInstance] lift:@"saveState"];
-	}];
+	[tincan setStateWithValue:stateContents withStateId:stateId withActivityId:[TCUtil encodeURL:@"http://tincanapi.com/test"] withAgent:actor withRegistration:nil withOptions:nil
+		  withCompletionBlock:^{
+			  [[TestSemaphor sharedInstance] lift:@"saveState"];
+		  }
+			   withErrorBlock:^(NSError *error) {
+				   [[TestSemaphor sharedInstance] lift:@"saveState"];
+			   }];
 	[[TestSemaphor sharedInstance] waitForKey:@"saveState"];
 	
 	// get the state
 	[tincan getStateWithStateId:stateId withActivityId:[TCUtil encodeURL:@"http://tincanapi.com/test"] withAgent:actor withRegistration:nil withOptions:nil
-			withCompletionBlock:^(NSDictionary *state){
+			withCompletionBlock:^(NSDictionary *state) {
 				NSLog(@"state : %@", state);
 				[[TestSemaphor sharedInstance] lift:@"getState"];
 			}
-				 withErrorBlock:^(TCError *error){
+				 withErrorBlock:^(TCError *error) {
 					 [[TestSemaphor sharedInstance] lift:@"getState"];
 				 }];
 	[[TestSemaphor sharedInstance] waitForKey:@"getState"];
 	
 	// delete the state
 	[tincan deleteStateWithStateId:stateId withActivityId:[TCUtil encodeURL:@"http://tincanapi.com/test"] withAgent:actor withRegistration:nil withOptions:nil
-			   withCompletionBlock:^(){
+			   withCompletionBlock:^() {
 				   [[TestSemaphor sharedInstance] lift:@"deleteState"];
 			   }
-					withErrorBlock:^(TCError *error){
+					withErrorBlock:^(TCError *error) {
 						[[TestSemaphor sharedInstance] lift:@"deleteState"];
 					}];
 	[[TestSemaphor sharedInstance] waitForKey:@"deleteState"];

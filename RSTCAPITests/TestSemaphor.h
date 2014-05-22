@@ -12,10 +12,10 @@
 
 @property (strong, atomic) NSMutableDictionary* flags;
 
-+(TestSemaphor *)sharedInstance;
++ (TestSemaphor *)sharedInstance;
 
--(BOOL)isLifted:(NSString*)key;
--(void)lift:(NSString*)key;
--(void)waitForKey:(NSString*)key;
+- (BOOL)isLifted:(NSString*)key;
+- (void)lift:(NSString*)key;
+- (void)waitForKey:(NSString*)key;
 
 @end

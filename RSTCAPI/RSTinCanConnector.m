@@ -25,14 +25,13 @@
 @interface RSTinCanConnector()
 {
 	NSMutableArray *_recordStore;
-	
 }
 
 @end
 
 @implementation RSTinCanConnector
 
-- (id) initWithOptions:(NSDictionary *)options
+- (id)initWithOptions:(NSDictionary *)options
 {
 	if ((self = [super init])) {
 		_recordStore = [options valueForKey:@"recordStore"];
@@ -46,7 +45,7 @@
  pre-created TinCan.Statement instance
  @return {TinCan.Statement}
  */
-- (void) prepareStatement:(TCStatement *)statementToPrepare withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)prepareStatement:(TCStatement *)statementToPrepare withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
@@ -61,17 +60,17 @@
  @param {TinCan.Statement|Object} statement Send statement to LRS
  @param {Function} [callback] Callback function to execute on completion
  */
-- (void) sendStatement:(TCStatement *)statementToSend withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)sendStatement:(TCStatement *)statementToSend withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs saveStatement:statementToSend withOptions:nil
-   withCompletionBlock:^(){
+   withCompletionBlock:^() {
 	   dispatch_async(dispatch_get_main_queue(), ^{
 		   completionBlock();
 	   });
    }
-		withErrorBlock:^(TCError *error){
+		withErrorBlock:^(TCError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				errorBlock(error);
 			});
@@ -88,17 +87,17 @@
  
  TODO: make TinCan track statements it has seen in a local cache to be returned easily
  */
-- (void) getStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)getStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs retrieveStatementWithId:statementId withOptions:options
-			 withCompletionBlock:^(TCStatement *statement){
+			 withCompletionBlock:^(TCStatement *statement) {
 				 dispatch_async(dispatch_get_main_queue(), ^{
 					 completionBlock(statement);
 				 });
 			 }
-				  withErrorBlock:^(TCError *error){
+				  withErrorBlock:^(TCError *error) {
 					  dispatch_async(dispatch_get_main_queue(), ^{
 						  errorBlock(error);
 					  });
@@ -112,17 +111,17 @@
  @param {Array} Array of statements to send
  @param {Function} Callback function to execute on completion
  */
-- (void) sendStatements:(TCStatementCollection *)statementArray withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)sendStatements:(TCStatementCollection *)statementArray withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs saveStatements:statementArray withOptions:nil
-	withCompletionBlock:^(){
+	withCompletionBlock:^() {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			completionBlock();
 		});
 	}
-		 withErrorBlock:^(TCError *error){
+		 withErrorBlock:^(TCError *error) {
 			 dispatch_async(dispatch_get_main_queue(), ^{
 				 errorBlock(error);
 			 });
@@ -140,17 +139,17 @@
  
  TODO: support multiple LRSs and flag to use single
  */
-- (void) getStatementsWithOptions:(TCQueryOptions *)options withCompletionBlock:(void(^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)getStatementsWithOptions:(TCQueryOptions *)options withCompletionBlock:(void(^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs queryStatementsWithOptions:options
-				withCompletionBlock:^(NSArray *statementArray){
+				withCompletionBlock:^(NSArray *statementArray) {
 					dispatch_async(dispatch_get_main_queue(), ^{
 						completionBlock(statementArray);
 					});
 				}
-					 withErrorBlock:^(TCError *error){
+					 withErrorBlock:^(TCError *error) {
 						 dispatch_async(dispatch_get_main_queue(), ^{
 							 errorBlock(error);
 						 });
@@ -171,18 +170,17 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) getStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)getStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs retrieveStateWithStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration withOptions:options
-			  withCompletionBlock:^(NSDictionary *state)
-	{
-		dispatch_async(dispatch_get_main_queue(), ^{
-			completionBlock(state);
-		});
-	}
-				   withErrorBlock:^(TCError *error){
+			  withCompletionBlock:^(NSDictionary *state) {
+				  dispatch_async(dispatch_get_main_queue(), ^{
+					  completionBlock(state);
+				  });
+			  }
+				   withErrorBlock:^(TCError *error) {
 					   dispatch_async(dispatch_get_main_queue(), ^{
 						   errorBlock(error);
 					   });
@@ -202,17 +200,17 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) setStateWithValue:(NSDictionary *)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)setStateWithValue:(NSDictionary *)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
 	[lrs saveStateWithValue:value withStateId:stateId withActivityId:(NSString *)activityId withAgent:agent withRegistration:registration withLastSHA1:nil withOptions:options
-		withCompletionBlock:^(){
+		withCompletionBlock:^() {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-			 withErrorBlock:^(TCError *error){
+			 withErrorBlock:^(TCError *error) {
 				 dispatch_async(dispatch_get_main_queue(), ^{
 					 errorBlock(error);
 				 });
@@ -231,7 +229,7 @@
  defaults to 'registration' property if empty
  @param {Function} [cfg.callback] Function to run with state
  */
-- (void) deleteStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)deleteStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
 	
@@ -242,7 +240,7 @@
 			completionBlock();
 		});
 	}
-			   withErrorBlock:^(TCError *error){
+			   withErrorBlock:^(TCError *error) {
 				   dispatch_async(dispatch_get_main_queue(), ^{
 					   errorBlock(error);
 				   });
@@ -257,7 +255,7 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) getActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)getActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
@@ -274,7 +272,7 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) setActivityProfile:(NSString *)key withValue:(NSDictionary *)value withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)setActivityProfile:(NSString *)key withValue:(NSDictionary *)value withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
@@ -290,13 +288,12 @@
  defaults to 'activity' property if empty
  @param {Function} [cfg.callback] Function to run with activity profile
  */
-- (void) deleteActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)deleteActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
 		errorBlock(error);
 	});
 }
-
 
 @end

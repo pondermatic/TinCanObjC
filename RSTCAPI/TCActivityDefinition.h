@@ -24,8 +24,8 @@
 
 @interface TCActivityDefinition : NSObject
 
-- (id) initWithName:(TCLocalizedValues *)name withDescription:(TCLocalizedValues *)description withType:(NSString *)type withExtensions:(NSDictionary *)extensions withInteractionType:(NSString *)interactionType withCorrectResponsesPattern:(NSArray *)correctResponsesPattern withChoices:(NSArray *)choices withScale:(NSArray *)scale withTarget:(NSArray *)target withSteps:(NSArray *)steps;
-- (id) initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithName:(TCLocalizedValues *)name withDescription:(TCLocalizedValues *)description withType:(NSString *)type withExtensions:(NSDictionary *)extensions withInteractionType:(NSString *)interactionType withCorrectResponsesPattern:(NSArray *)correctResponsesPattern withChoices:(NSArray *)choices withScale:(NSArray *)scale withTarget:(NSArray *)target withSteps:(NSArray *)steps;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *)dictionary;
 
 @end

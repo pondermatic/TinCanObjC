@@ -24,9 +24,9 @@
 
 @interface TCStatementCollection : NSObject
 
-- (id) init;
+- (id)init;
 
-- (void) addStatement:(TCStatement *)statement;
+- (void)addStatement:(TCStatement *)statement;
 
 - (NSString *)JSONString;
 

@@ -66,8 +66,7 @@
 // Here we are taking in our string hash, placing that inside of a C Char Array, then parsing it through the SHA256 encryption method.
 + (NSString*)computeSHA256DigestForString:(NSString*)input
 {
-	
-	const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
+ 	const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
 	NSData *data = [NSData dataWithBytes:cstr length:input.length];
 	uint8_t digest[CC_SHA256_DIGEST_LENGTH];
 	
@@ -79,7 +78,7 @@
 	NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 2];
 	
 	// Parse through the CC_SHA256 results (stored inside of digest[]).
-	for(int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
+	for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
 		[output appendFormat:@"%02x", digest[i]];
 	}
 	

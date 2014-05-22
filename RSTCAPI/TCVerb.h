@@ -24,9 +24,9 @@
 
 @interface TCVerb : NSObject
 
-- (id) initWithId:(NSString *)verbId withVerbDisplay:(TCLocalizedValues *)display;
-- (id) initWithJSON:(NSString *)verbJSON;
-- (id) initWithDictionary:(NSDictionary *)verbDictionary;
+- (id)initWithId:(NSString *)verbId withVerbDisplay:(TCLocalizedValues *)display;
+- (id)initWithJSON:(NSString *)verbJSON;
+- (id)initWithDictionary:(NSDictionary *)verbDictionary;
 - (NSDictionary *)dictionary;
-- (NSString *) JSONString;
+- (NSString *)JSONString;
 @end

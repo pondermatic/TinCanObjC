@@ -31,7 +31,7 @@
 
 @implementation TCStatementCollection
 
-- (id) init
+- (id)init
 {
 	if ((self = [super init])) {
 		_statementArray = [[NSMutableArray alloc] init];
@@ -39,7 +39,7 @@
 	return self;
 }
 
-- (void) addStatement:(TCStatement *)statement
+- (void)addStatement:(TCStatement *)statement
 {
 	[_statementArray addObject:[statement dictionary]];
 }

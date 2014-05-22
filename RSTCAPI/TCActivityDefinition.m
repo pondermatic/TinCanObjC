@@ -41,7 +41,7 @@
 
 @implementation TCActivityDefinition
 
-- (id) initWithName:(TCLocalizedValues *)name withDescription:(TCLocalizedValues *)description withType:(NSString *)type withExtensions:(NSDictionary *)extensions withInteractionType:(NSString *)interactionType withCorrectResponsesPattern:(NSArray *)correctResponsesPattern withChoices:(NSArray *)choices withScale:(NSArray *)scale withTarget:(NSArray *)target withSteps:(NSArray *)steps
+- (id)initWithName:(TCLocalizedValues *)name withDescription:(TCLocalizedValues *)description withType:(NSString *)type withExtensions:(NSDictionary *)extensions withInteractionType:(NSString *)interactionType withCorrectResponsesPattern:(NSArray *)correctResponsesPattern withChoices:(NSArray *)choices withScale:(NSArray *)scale withTarget:(NSArray *)target withSteps:(NSArray *)steps
 {
 	if ((self = [super init])) {
 		_name = name;
@@ -58,7 +58,7 @@
 	return self;
 }
 
-- (id) initWithDictionary:(NSDictionary *)dictionary
+- (id)initWithDictionary:(NSDictionary *)dictionary
 {
 	if ((self = [super init])) {
 		_name = [[TCLocalizedValues alloc] initWithDictionary:[dictionary valueForKey:@"name"]];
@@ -82,25 +82,25 @@
 	[_actDefDict setValue:[_description dictionary] forKey:@"description"];
 	[_actDefDict setValue:_type forKey:@"type"];
 	
-	if(_extensions != nil){
+	if (_extensions != nil) {
 		[_actDefDict setValue:_extensions forKey:@"extensions"];
 	}
-	if(_interactionType != nil){
+	if (_interactionType != nil) {
 		[_actDefDict setValue:_interactionType forKey:@"interactionType"];
 	}
-	if(_correctResponsesPattern != nil){
+	if (_correctResponsesPattern != nil) {
 		[_actDefDict setValue:_correctResponsesPattern forKey:@"correctResponsesPattern"];
 	}
-	if(_choices != nil){
+	if (_choices != nil) {
 		[_actDefDict setValue:_choices forKey:@"choices"];
 	}
-	if(_scale != nil){
+	if (_scale != nil) {
 		[_actDefDict setValue:_scale forKey:@"scale"];
 	}
-	if(_target != nil){
+	if (_target != nil) {
 		[_actDefDict setValue:_target forKey:@"target"];
 	}
-	if(_steps != nil){
+	if (_steps != nil) {
 		[_actDefDict setValue:_steps forKey:@"steps"];
 	}
 	

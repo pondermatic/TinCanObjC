@@ -44,7 +44,7 @@
 		_endpoint = [options valueForKey:@"endpoint"];
 		_auth = [options valueForKey:@"auth"];
 		_version = (NSString *)[options valueForKey:@"version"];
-		if(![_version isEqualToString:kTC_VERSION_0_95] && ![_version isEqualToString:kTC_VERSION_1_0_0])
+		if (![_version isEqualToString:kTC_VERSION_0_95] && ![_version isEqualToString:kTC_VERSION_1_0_0])
 		{
 			_version = kTC_VERSION_1_0_0; //default to 1.0.0 for now
 		}
@@ -61,7 +61,7 @@
  @param {Object} [cfg] Configuration used when saving
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStatement:(TCStatement *)statement withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)saveStatement:(TCStatement *)statement withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, [TCUtil GetUUID] ]]];
 	
@@ -71,10 +71,10 @@
 	
 	NSLog(@"statement JSON %@", [statement JSONString]);
 	
-	if(statement.boundary){
+	if (statement.boundary) {
 		// multipart/mixed format
 		[urlRequest setValue:[NSString stringWithFormat:@"multipart/mixed; boundary=%@", statement.boundary] forHTTPHeaderField:@"Content-Type"];
-	}else{
+	} else {
 		//standard JSON format
 		[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 	}
@@ -95,23 +95,22 @@
 		
 		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
 		
-		if(httpResponse.statusCode == 204){
+		if (httpResponse.statusCode == 204) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		else if (httpResponse.statusCode >= 400){
+		else if (httpResponse.statusCode >= 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
 				errorBlock(error400);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		
 	}];
 }
 
@@ -124,7 +123,7 @@
  @param {Object} [cfg] Configuration used when saving
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements", _endpoint]]];
 	
@@ -152,27 +151,25 @@
 		
 		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
 		
-		if(httpResponse.statusCode == 200){
+		if (httpResponse.statusCode == 200) {
 			NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			NSLog(@"saveStatements 200 - %@", responseStr);
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		else if (httpResponse.statusCode == 400){
+		else if (httpResponse.statusCode == 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
 				errorBlock(error400);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				errorBlock((TCError*)error);
 			});
 		}
-		
 	}];
-	
 }
 
 /**
@@ -184,7 +181,7 @@
  @param {Function} [cfg.callback] Callback to execute on completion
  @return {Object} TinCan.Statement retrieved
  */
-- (void) retrieveStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)retrieveStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, statementId ]]];
 	
@@ -200,16 +197,15 @@
 		//parse result as JSON
 		id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 		NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
-		if(error){
+		if (error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				errorBlock((TCError*)error);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock([statements valueForKey:@"statement"]);
 			});
 		}
-		
 	}];
 }
 
@@ -237,7 +233,7 @@
  @param {TinCan.StatementsResult|XHR} cfg.callback.response Receives a StatementsResult argument
  @return {Object} Request result
  */
-- (void) queryStatementsWithOptions:(TCQueryOptions *)queryOptions withCompletionBlock:(void (^)(NSArray *))completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)queryStatementsWithOptions:(TCQueryOptions *)queryOptions withCompletionBlock:(void (^)(NSArray *))completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	
 	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements%@", _endpoint, [queryOptions querystring] ]]];
@@ -256,19 +252,17 @@
 		//parse result as JSON
 		id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 		NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
-		if(error){
+		if (error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				errorBlock((TCError*)error);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				_currentMoreUrl = [statements valueForKey:@"more"];
 				completionBlock([statements valueForKey:@"statements"]);
 			});
 		}
-		
 	}];
-	
 }
 
 /**
@@ -283,7 +277,7 @@
  @param {TinCan.StatementsResult|XHR} cfg.callback.response Receives a StatementsResult argument
  @return {Object} Request result
  */
--(void) moreStatements:(NSDictionary *)options withMoreUrl:(NSString *)moreUrl withCompletionBlock:(void (^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)moreStatements:(NSDictionary *)options withMoreUrl:(NSString *)moreUrl withCompletionBlock:(void (^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
@@ -305,7 +299,7 @@
  @param {TinCan.State|null} cfg.callback.result null if state is 404
  @return {Object} TinCan.State retrieved when synchronous, or result from sendRequest
  */
-- (void) retrieveStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)retrieveStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
 	
@@ -331,23 +325,22 @@
 		
 		id state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 		
-		if(httpResponse.statusCode == 204){
+		if (httpResponse.statusCode == 204) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock(state);
 			});
 		}
-		else if (httpResponse.statusCode == 400){
+		else if (httpResponse.statusCode == 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
 				errorBlock(error400);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock(state);
 			});
 		}
-		
 	}];
 }
 
@@ -364,7 +357,7 @@
  @param {String} [cfg.lastSHA1] SHA1 of the previously seen existing state
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveStateWithValue:(NSDictionary*)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withLastSHA1:(NSString *)lastSHA1 withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)saveStateWithValue:(NSDictionary*)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withLastSHA1:(NSString *)lastSHA1 withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	
 	TCState *state = [[TCState alloc] initWithContents:value withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
@@ -398,25 +391,23 @@
 		
 		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
 		
-		if(httpResponse.statusCode == 204){
+		if (httpResponse.statusCode == 204) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		else if (httpResponse.statusCode == 400){
+		else if (httpResponse.statusCode == 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
 				errorBlock(error400);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		
 	}];
-	
 }
 
 /**
@@ -430,7 +421,7 @@
  @param {String} [cfg.registration] Registration
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) dropStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)dropStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
 	
@@ -454,23 +445,22 @@
 		
 		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
 		
-		if(httpResponse.statusCode == 204){
+		if (httpResponse.statusCode == 204) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		else if (httpResponse.statusCode == 400){
+		else if (httpResponse.statusCode == 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
 				errorBlock(error400);
 			});
-		}else{
+		} else {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
-		
 	}];
 }
 
@@ -484,7 +474,7 @@
  @param {Function} [cfg.callback] Callback to execute on completion
  @return {Object} Value retrieved
  */
-- (void) retrieveActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)retrieveActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	
 }
@@ -499,7 +489,7 @@
  @param {String} [cfg.lastSHA1] SHA1 of the previously seen existing profile
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) saveActivityProfileWithValue:(NSDictionary *)profile forKey:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)saveActivityProfileWithValue:(NSDictionary *)profile forKey:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	
 }
@@ -513,7 +503,7 @@
  @param {Object} cfg.activity TinCan.Activity
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void) dropActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)dropActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	
 }

@@ -36,7 +36,7 @@
 
 @implementation TCState
 
-- (id) initWithContents:(NSDictionary *)contents withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration
+- (id)initWithContents:(NSDictionary *)contents withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration
 {
 	_stateId = stateId;
 	_contents = contents;
@@ -49,7 +49,7 @@
 }
 
 
-- (NSString *) JSONString
+- (NSString *)JSONString
 {
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_contents
@@ -61,16 +61,16 @@
 	return jsonString;
 }
 
-- (NSString *) querystring
+- (NSString *)querystring
 {
 	NSMutableString *qs = [[NSMutableString alloc] init];
 	
 	[qs appendFormat:@"?stateId=%@", _stateId];
 	[qs appendFormat:@"&activityId=%@", _activityId];
-	[qs appendFormat:@"&agent=%@",[[[_agent JSONString] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
-	if(_registration)
+	[qs appendFormat:@"&agent=%@", [[[_agent JSONString] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+	if (_registration)
 	{
-		[qs appendFormat:@"&registration=%@",_registration];
+		[qs appendFormat:@"&registration=%@", _registration];
 	}
 	
 	return [qs copy];

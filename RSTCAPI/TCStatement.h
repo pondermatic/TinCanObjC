@@ -42,14 +42,14 @@
 @property (nonatomic, retain) NSString *boundary;
 @property (nonatomic, retain) TCAttachmentCollection *attachments;
 
-- (id) initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context;
+- (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context;
 
-- (id) initWithJSON:(NSString *)statementJSON;
+- (id)initWithJSON:(NSString *)statementJSON;
 
-- (id) initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context withBoundary:(NSString *)boundary withAttachments:(TCAttachmentCollection *)attachmentArray;
+- (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context withBoundary:(NSString *)boundary withAttachments:(TCAttachmentCollection *)attachmentArray;
 
-- (NSDictionary *) dictionary;
+- (NSDictionary *)dictionary;
 
-- (NSString *) JSONString;
+- (NSString *)JSONString;
 
 @end

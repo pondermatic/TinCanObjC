@@ -26,10 +26,10 @@
 
 @interface TCState : NSObject
 
-- (id) initWithContents:(NSDictionary *)contents withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration;
+- (id)initWithContents:(NSDictionary *)contents withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration;
 
-- (NSString *) JSONString;
+- (NSString *)JSONString;
 
-- (NSString *) querystring;
+- (NSString *)querystring;
 
 @end

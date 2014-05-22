@@ -35,9 +35,9 @@
 @property (nonatomic, strong) NSString *dataString;
 
 
-- (id) initWithSha2:(NSString *)sha2 withDataString:(NSString *)dataString withUsageType:(NSString *)usageType withContentType:(NSString *)contentType withContentTransferEncoding:(NSString *)contentTransferEncoding withDisplay:(TCLocalizedValues *)display withDescription:(TCLocalizedValues *)description withLength:(NSNumber *)length withFileUrl:(NSString *)fileUrl;
+- (id)initWithSha2:(NSString *)sha2 withDataString:(NSString *)dataString withUsageType:(NSString *)usageType withContentType:(NSString *)contentType withContentTransferEncoding:(NSString *)contentTransferEncoding withDisplay:(TCLocalizedValues *)display withDescription:(TCLocalizedValues *)description withLength:(NSNumber *)length withFileUrl:(NSString *)fileUrl;
 
--(NSDictionary *)dictionary;
-- (NSString *) JSONString;
+- (NSDictionary *)dictionary;
+- (NSString *)JSONString;
 
 @end
