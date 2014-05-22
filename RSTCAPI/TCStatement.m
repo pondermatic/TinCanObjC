@@ -105,7 +105,7 @@
 	[statement setValue:[_result dictionary] forKey:@"result"];
 	[statement setValue:[_context dictionary] forKey:@"context"];
 	
-	if (_attachments.count>0) {
+	if (_attachments.count > 0) {
 		[statement setValue:_attachments forKey:@"attachments"];
 	}
 	return [statement copy];
