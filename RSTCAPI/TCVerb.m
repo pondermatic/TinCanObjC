@@ -23,9 +23,9 @@
 
 @interface TCVerb()
 {
-    NSString *_verbId;
-    TCLocalizedValues *_display;
-    NSMutableDictionary *_verbDict;
+	NSString *_verbId;
+	TCLocalizedValues *_display;
+	NSMutableDictionary *_verbDict;
 }
 
 @end
@@ -34,62 +34,62 @@
 
 - (id) initWithId:(NSString *)verbId withVerbDisplay:(TCLocalizedValues *)display
 {
-    if ((self = [super init])) {
-        _verbId = verbId;
-        _display = display;
-    }
-    return self;
+	if ((self = [super init])) {
+		_verbId = verbId;
+		_display = display;
+	}
+	return self;
 }
 
 - (id) initWithJSON:(NSString *)verbJSON
 {
-    if ((self = [super init])) {
-        NSError* error;
-        NSDictionary *verbDict = [NSJSONSerialization JSONObjectWithData:[verbJSON dataUsingEncoding:NSStringEncodingConversionAllowLossy] options:kNilOptions error:&error];
-        
-        NSString *verbId = [verbDict objectForKey:@"id"];
-        TCLocalizedValues *verbDisplay = [[TCLocalizedValues alloc] initWithDictionary:[verbDict objectForKey:@"display"]];
-        
-        if(verbId)
-        {
-            _verbId = verbId;
-        }
-        
-        if(verbDisplay)
-        {
-            _display = verbDisplay;
-        }
-    }
-    return self;
+	if ((self = [super init])) {
+		NSError* error;
+		NSDictionary *verbDict = [NSJSONSerialization JSONObjectWithData:[verbJSON dataUsingEncoding:NSStringEncodingConversionAllowLossy] options:kNilOptions error:&error];
+		
+		NSString *verbId = [verbDict objectForKey:@"id"];
+		TCLocalizedValues *verbDisplay = [[TCLocalizedValues alloc] initWithDictionary:[verbDict objectForKey:@"display"]];
+		
+		if(verbId)
+		{
+			_verbId = verbId;
+		}
+		
+		if(verbDisplay)
+		{
+			_display = verbDisplay;
+		}
+	}
+	return self;
 }
 
 - (id) initWithDictionary:(NSDictionary *)verbDictionary
 {
-    if ((self = [super init])) {
-        _verbId = [verbDictionary objectForKey:@"id"];
-        _display = [[TCLocalizedValues alloc] initWithDictionary:[verbDictionary objectForKey:@"display"]];
-    }
-    return self;
+	if ((self = [super init])) {
+		_verbId = [verbDictionary objectForKey:@"id"];
+		_display = [[TCLocalizedValues alloc] initWithDictionary:[verbDictionary objectForKey:@"display"]];
+	}
+	return self;
 }
 
 - (NSDictionary *)dictionary
 {
-    _verbDict = [[NSMutableDictionary alloc] init];
-    [_verbDict setValue:_verbId forKey:@"id"];
-    [_verbDict setValue:[_display dictionary] forKey:@"display"];
-    return [_verbDict copy];
+	_verbDict = [[NSMutableDictionary alloc] init];
+	[_verbDict setValue:_verbId forKey:@"id"];
+	[_verbDict setValue:[_display dictionary] forKey:@"display"];
+	return [_verbDict copy];
 }
 
 - (NSString *) JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+	
+	return jsonString;
 }
 
 @end

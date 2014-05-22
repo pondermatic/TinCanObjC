@@ -23,10 +23,10 @@
 
 @interface TCAgent()
 {
-    NSString *_name;
-    NSString *_mbox;
-    NSMutableDictionary *_accountDict;
-    NSMutableDictionary *_actorDict;
+	NSString *_name;
+	NSString *_mbox;
+	NSMutableDictionary *_accountDict;
+	NSMutableDictionary *_actorDict;
 }
 
 @end
@@ -35,88 +35,88 @@
 
 - (id)initWithName:(NSString *)name withMbox:(NSString *)mbox withAccount:(NSMutableDictionary *)accountDict
 {
-    if ((self = [super init])) {
-        _name = name;
-        _mbox = mbox;
-        _accountDict = accountDict;
-    }
-    return self;
+	if ((self = [super init])) {
+		_name = name;
+		_mbox = mbox;
+		_accountDict = accountDict;
+	}
+	return self;
 }
 
 - (id)initWithJSON:(NSString *)agentJSON
 {
-    if ((self = [super init])) {
-        NSError* error;
-        NSDictionary *agentDict = [NSJSONSerialization JSONObjectWithData:[agentJSON dataUsingEncoding:NSStringEncodingConversionAllowLossy] options:kNilOptions error:&error];
-        
-        NSString *agentName = [agentDict objectForKey:@"name"];
-        NSString *agentMbox = [agentDict objectForKey:@"mbox"];
-        NSMutableDictionary *accountDict = [agentDict objectForKey:@"account"];
-        
-        if(agentName)
-        {
-            _name = agentName;
-        }
-        
-        if(agentMbox)
-        {
-            _mbox = agentMbox;
-        }
-        
-        if(accountDict)
-        {
-            _accountDict = accountDict;
-        }
-    }
-    return self;
+	if ((self = [super init])) {
+		NSError* error;
+		NSDictionary *agentDict = [NSJSONSerialization JSONObjectWithData:[agentJSON dataUsingEncoding:NSStringEncodingConversionAllowLossy] options:kNilOptions error:&error];
+		
+		NSString *agentName = [agentDict objectForKey:@"name"];
+		NSString *agentMbox = [agentDict objectForKey:@"mbox"];
+		NSMutableDictionary *accountDict = [agentDict objectForKey:@"account"];
+		
+		if(agentName)
+		{
+			_name = agentName;
+		}
+		
+		if(agentMbox)
+		{
+			_mbox = agentMbox;
+		}
+		
+		if(accountDict)
+		{
+			_accountDict = accountDict;
+		}
+	}
+	return self;
 }
 
 - (id)initWithDictionary:(NSDictionary *)agentDictionary
 {
-    if ((self = [super init])) {
-        
-        NSString *agentName = [agentDictionary objectForKey:@"name"];
-        NSString *agentMbox = [agentDictionary objectForKey:@"mbox"];
-        NSMutableDictionary *accountDict = [agentDictionary objectForKey:@"account"];
-        
-        if(agentName)
-        {
-            _name = agentName;
-        }
-        
-        if(agentMbox)
-        {
-            _mbox = agentMbox;
-        }
-        
-        if(accountDict)
-        {
-            _accountDict = accountDict;
-        }
-    }
-    return self;
+	if ((self = [super init])) {
+		
+		NSString *agentName = [agentDictionary objectForKey:@"name"];
+		NSString *agentMbox = [agentDictionary objectForKey:@"mbox"];
+		NSMutableDictionary *accountDict = [agentDictionary objectForKey:@"account"];
+		
+		if(agentName)
+		{
+			_name = agentName;
+		}
+		
+		if(agentMbox)
+		{
+			_mbox = agentMbox;
+		}
+		
+		if(accountDict)
+		{
+			_accountDict = accountDict;
+		}
+	}
+	return self;
 }
 
 - (NSDictionary *)dictionary
 {
-    _actorDict = [[NSMutableDictionary alloc] init];
-    [_actorDict setValue:_name forKey:@"name"];
-    [_actorDict setValue:_mbox forKey:@"mbox"];
-    [_actorDict setValue:_accountDict forKey:@"account"];
-    [_actorDict setValue:@"Agent" forKey:@"objectType"];
-    return [_actorDict copy];
+	_actorDict = [[NSMutableDictionary alloc] init];
+	[_actorDict setValue:_name forKey:@"name"];
+	[_actorDict setValue:_mbox forKey:@"mbox"];
+	[_actorDict setValue:_accountDict forKey:@"account"];
+	[_actorDict setValue:@"Agent" forKey:@"objectType"];
+	return [_actorDict copy];
 }
 
 - (NSString *) JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+	
+	return jsonString;
 }
 
 @end

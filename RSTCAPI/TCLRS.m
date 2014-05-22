@@ -26,10 +26,10 @@
 
 @interface TCLRS()
 {
-    NSString *_endpoint;
-    NSString *_auth;
-    NSString *_currentMoreUrl;
-    NSString *_version;
+	NSString *_endpoint;
+	NSString *_auth;
+	NSString *_currentMoreUrl;
+	NSString *_version;
 }
 
 @end
@@ -39,19 +39,17 @@
 
 @implementation TCLRS
 
-
-
 - (id)initWithOptions:(NSDictionary *)options {
-    if ((self = [super init])) {
-        _endpoint = [options valueForKey:@"endpoint"];
-        _auth = [options valueForKey:@"auth"];
-        _version = (NSString *)[options valueForKey:@"version"];
-        if(![_version isEqualToString:kTC_VERSION_0_95] && ![_version isEqualToString:kTC_VERSION_1_0_0])
-        {
-            _version = kTC_VERSION_1_0_0; //default to 1.0.0 for now
-        }
-    }
-    return self;
+	if ((self = [super init])) {
+		_endpoint = [options valueForKey:@"endpoint"];
+		_auth = [options valueForKey:@"auth"];
+		_version = (NSString *)[options valueForKey:@"version"];
+		if(![_version isEqualToString:kTC_VERSION_0_95] && ![_version isEqualToString:kTC_VERSION_1_0_0])
+		{
+			_version = kTC_VERSION_1_0_0; //default to 1.0.0 for now
+		}
+	}
+	return self;
 }
 
 /**
@@ -65,56 +63,56 @@
  */
 - (void) saveStatement:(TCStatement *)statement withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, [TCUtil GetUUID] ]]];
-    
-    NSString *requestString = [NSString stringWithFormat:@"%@", [statement JSONString], nil];
-    NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
-
-    NSLog(@"statement JSON %@", [statement JSONString]);
-    
-    if(statement.boundary){
-        // multipart/mixed format
-        [urlRequest setValue:[NSString stringWithFormat:@"multipart/mixed; boundary=%@", statement.boundary] forHTTPHeaderField:@"Content-Type"];
-    }else{
-        //standard JSON format
-        [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    }
-    
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    [urlRequest setHTTPMethod:@"PUT"];
-    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-
-    [urlRequest setHTTPBody: requestData];
- 
-    NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
-
-        if(httpResponse.statusCode == 204){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        else if (httpResponse.statusCode >= 400){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
-                errorBlock(error400);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        
-    }];
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, [TCUtil GetUUID] ]]];
+	
+	NSString *requestString = [NSString stringWithFormat:@"%@", [statement JSONString], nil];
+	NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
+	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
+	
+	NSLog(@"statement JSON %@", [statement JSONString]);
+	
+	if(statement.boundary){
+		// multipart/mixed format
+		[urlRequest setValue:[NSString stringWithFormat:@"multipart/mixed; boundary=%@", statement.boundary] forHTTPHeaderField:@"Content-Type"];
+	}else{
+		//standard JSON format
+		[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	}
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	[urlRequest setHTTPMethod:@"PUT"];
+	[urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	
+	[urlRequest setHTTPBody: requestData];
+	
+	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		
+		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		
+		if(httpResponse.statusCode == 204){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		else if (httpResponse.statusCode >= 400){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				errorBlock(error400);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		
+	}];
 }
 
 /**
@@ -128,53 +126,53 @@
  */
 - (void) saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements", _endpoint]]];
-    
-    NSString *requestString = [NSString stringWithFormat:@"%@", [statementArray JSONString], nil];
-    NSLog(@"saveStatements requestString %@", requestString);
-    NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
-    
-    
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    [urlRequest setHTTPBody: requestData];
-    
-    NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
-        
-        if(httpResponse.statusCode == 200){
-            NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"saveStatements 200 - %@", responseStr);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        else if (httpResponse.statusCode == 400){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
-                errorBlock(error400);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                errorBlock((TCError*)error);
-            });
-        }
-        
-    }];
-    
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements", _endpoint]]];
+	
+	NSString *requestString = [NSString stringWithFormat:@"%@", [statementArray JSONString], nil];
+	NSLog(@"saveStatements requestString %@", requestString);
+	NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
+	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
+	
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	[urlRequest setHTTPMethod:@"POST"];
+	[urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	
+	[urlRequest setHTTPBody: requestData];
+	
+	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		
+		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		
+		if(httpResponse.statusCode == 200){
+			NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			NSLog(@"saveStatements 200 - %@", responseStr);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		else if (httpResponse.statusCode == 400){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				errorBlock(error400);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				errorBlock((TCError*)error);
+			});
+		}
+		
+	}];
+	
 }
 
 /**
@@ -188,31 +186,31 @@
  */
 - (void) retrieveStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, statementId ]]];
-    
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"retrieveStatement - %@", responseStr);
-        
-        //parse result as JSON
-        id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
-        if(error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                errorBlock((TCError*)error);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock([statements valueForKey:@"statement"]);
-            });
-        }
-        
-    }];
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements?statementId=%@", _endpoint, statementId ]]];
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSLog(@"retrieveStatement - %@", responseStr);
+		
+		//parse result as JSON
+		id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+		NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
+		if(error){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				errorBlock((TCError*)error);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock([statements valueForKey:@"statement"]);
+			});
+		}
+		
+	}];
 }
 
 /**
@@ -241,36 +239,36 @@
  */
 - (void) queryStatementsWithOptions:(TCQueryOptions *)queryOptions withCompletionBlock:(void (^)(NSArray *))completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements%@", _endpoint, [queryOptions querystring] ]]];
-
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    NSLog(@"request %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"queryStatementsWithOptions - %@", responseStr);
-
-        //parse result as JSON
-        id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
-        if(error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                errorBlock((TCError*)error);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _currentMoreUrl = [statements valueForKey:@"more"];
-                completionBlock([statements valueForKey:@"statements"]);
-            });
-        }
-        
-    }];
-    
+	
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements%@", _endpoint, [queryOptions querystring] ]]];
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	NSLog(@"request %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSLog(@"queryStatementsWithOptions - %@", responseStr);
+		
+		//parse result as JSON
+		id statements = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+		NSLog(@"response : %@ - result: %@ - Error: %@", response.description, statements, error.userInfo);
+		if(error){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				errorBlock((TCError*)error);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				_currentMoreUrl = [statements valueForKey:@"more"];
+				completionBlock([statements valueForKey:@"statements"]);
+			});
+		}
+		
+	}];
+	
 }
 
 /**
@@ -287,10 +285,10 @@
  */
 -(void) moreStatements:(NSDictionary *)options withMoreUrl:(NSString *)moreUrl withCompletionBlock:(void (^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
-        errorBlock(error);
-    });
+	dispatch_async(dispatch_get_main_queue(), ^{
+		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
+		errorBlock(error);
+	});
 }
 
 /**
@@ -309,48 +307,48 @@
  */
 - (void) retrieveStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
-    
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
-        
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"saveStateWithValue - %@", responseStr);
-        
-        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
-        
-        id state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        
-        if(httpResponse.statusCode == 204){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(state);
-            });
-        }
-        else if (httpResponse.statusCode == 400){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
-                errorBlock(error400);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(state);
-            });
-        }
-        
-    }];
+	TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
+	
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	[urlRequest setHTTPMethod:@"GET"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	
+	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		
+		NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSLog(@"saveStateWithValue - %@", responseStr);
+		
+		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		
+		id state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+		
+		if(httpResponse.statusCode == 204){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock(state);
+			});
+		}
+		else if (httpResponse.statusCode == 400){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				errorBlock(error400);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock(state);
+			});
+		}
+		
+	}];
 }
 
 /**
@@ -368,57 +366,57 @@
  */
 - (void) saveStateWithValue:(NSDictionary*)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withLastSHA1:(NSString *)lastSHA1 withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    
-    TCState *state = [[TCState alloc] initWithContents:value withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
-    
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
-    
-    // create JSON for body
-    NSString *requestString = [NSString stringWithFormat:@"%@", [state JSONString], nil];
-    NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
-    
-    
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    [urlRequest setHTTPMethod:@"PUT"];
-    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    [urlRequest setHTTPBody: requestData];
-    
-    NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"saveStateWithValue - %@", responseStr);
-        
-        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
-        
-        if(httpResponse.statusCode == 204){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        else if (httpResponse.statusCode == 400){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
-                errorBlock(error400);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        
-    }];
-
+	
+	TCState *state = [[TCState alloc] initWithContents:value withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
+	
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
+	
+	// create JSON for body
+	NSString *requestString = [NSString stringWithFormat:@"%@", [state JSONString], nil];
+	NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
+	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
+	
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	[urlRequest setHTTPMethod:@"PUT"];
+	[urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	
+	[urlRequest setHTTPBody: requestData];
+	
+	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		
+		NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSLog(@"saveStateWithValue - %@", responseStr);
+		
+		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		
+		if(httpResponse.statusCode == 204){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		else if (httpResponse.statusCode == 400){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				errorBlock(error400);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		
+	}];
+	
 }
 
 /**
@@ -434,46 +432,46 @@
  */
 - (void) dropStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
-    
-    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
-    
-    [urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
-    
-    [urlRequest setHTTPMethod:@"DELETE"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
-    
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        
-        NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"saveStateWithValue - %@", responseStr);
-        
-        NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
-        
-        if(httpResponse.statusCode == 204){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        else if (httpResponse.statusCode == 400){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
-                errorBlock(error400);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock();
-            });
-        }
-        
-    }];
+	TCState *state = [[TCState alloc] initWithContents:nil withStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration];
+	
+	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/activities/state%@", _endpoint, [state querystring] ]]];
+	
+	[urlRequest setValue:_auth forHTTPHeaderField:@"Authorization"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[urlRequest setValue:_version forHTTPHeaderField:@"X-Experience-API-Version"];
+	
+	[urlRequest setHTTPMethod:@"DELETE"];
+	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	
+	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+	
+	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		
+		NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		NSLog(@"saveStateWithValue - %@", responseStr);
+		
+		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		
+		if(httpResponse.statusCode == 204){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		else if (httpResponse.statusCode == 400){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				errorBlock(error400);
+			});
+		}else{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+		
+	}];
 }
 
 /**
@@ -488,7 +486,7 @@
  */
 - (void) retrieveActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    
+	
 }
 
 /**
@@ -503,7 +501,7 @@
  */
 - (void) saveActivityProfileWithValue:(NSDictionary *)profile forKey:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    
+	
 }
 
 /**
@@ -517,8 +515,7 @@
  */
 - (void) dropActivityProfileWithKey:(NSString *)key withActivity:(TCActivity *)activity withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    
+	
 }
 
 @end
-

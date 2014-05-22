@@ -23,7 +23,7 @@
 
 @interface TCLocalizedValues()
 {
-    NSMutableDictionary *_localizedValues;
+	NSMutableDictionary *_localizedValues;
 }
 
 @end
@@ -33,41 +33,41 @@
 
 - (id) initWithLanguageCode:(NSString *)languageCode withValue:(NSString *)value
 {
-    if ((self = [super init])) {
-        _localizedValues = [[NSMutableDictionary alloc] init];
-        [_localizedValues setValue:value forKey:languageCode];
-    }
-    return self;
+	if ((self = [super init])) {
+		_localizedValues = [[NSMutableDictionary alloc] init];
+		[_localizedValues setValue:value forKey:languageCode];
+	}
+	return self;
 }
 
 - (id) initWithDictionary:(NSDictionary *)dictionary
 {
-    if ((self = [super init])) {
-        _localizedValues = [dictionary mutableCopy];
-    }
-    return self;
+	if ((self = [super init])) {
+		_localizedValues = [dictionary mutableCopy];
+	}
+	return self;
 }
 
 - (void) addLocalizedValue:(NSString *)value withLanguageCode:(NSString *)languageCode
 {
-    [_localizedValues setValue:value forKey:languageCode];
+	[_localizedValues setValue:value forKey:languageCode];
 }
 
 - (NSDictionary *) dictionary
 {
-    return [_localizedValues copy];
+	return [_localizedValues copy];
 }
 
 - (NSString *) JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_localizedValues
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_localizedValues
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	
+	return jsonString;
 }
 
 @end

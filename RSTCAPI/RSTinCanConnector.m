@@ -24,8 +24,8 @@
 
 @interface RSTinCanConnector()
 {
-    NSMutableArray *_recordStore;
-    
+	NSMutableArray *_recordStore;
+	
 }
 
 @end
@@ -34,10 +34,10 @@
 
 - (id) initWithOptions:(NSDictionary *)options
 {
-    if ((self = [super init])) {
-        _recordStore = [options valueForKey:@"recordStore"];        
-    }
-    return self;
+	if ((self = [super init])) {
+		_recordStore = [options valueForKey:@"recordStore"];
+	}
+	return self;
 }
 
 /**
@@ -48,10 +48,10 @@
  */
 - (void) prepareStatement:(TCStatement *)statementToPrepare withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
-        errorBlock(error);
-    });
+	dispatch_async(dispatch_get_main_queue(), ^{
+		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
+		errorBlock(error);
+	});
 }
 
 /**
@@ -63,19 +63,19 @@
  */
 - (void) sendStatement:(TCStatement *)statementToSend withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs saveStatement:statementToSend withOptions:nil
-     withCompletionBlock:^(){
-         dispatch_async(dispatch_get_main_queue(), ^{
-             completionBlock();
-         });
-     }
-      withErrorBlock:^(TCError *error){
-          dispatch_async(dispatch_get_main_queue(), ^{
-              errorBlock(error);
-          });
-      }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs saveStatement:statementToSend withOptions:nil
+   withCompletionBlock:^(){
+	   dispatch_async(dispatch_get_main_queue(), ^{
+		   completionBlock();
+	   });
+   }
+		withErrorBlock:^(TCError *error){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				errorBlock(error);
+			});
+		}];
 }
 
 /**
@@ -90,19 +90,19 @@
  */
 - (void) getStatementWithId:(NSString *)statementId withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(TCStatement *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs retrieveStatementWithId:statementId withOptions:options
-        withCompletionBlock:^(TCStatement *statement){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(statement);
-            });
-        }
-         withErrorBlock:^(TCError *error){
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 errorBlock(error);
-             });
-         }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs retrieveStatementWithId:statementId withOptions:options
+			 withCompletionBlock:^(TCStatement *statement){
+				 dispatch_async(dispatch_get_main_queue(), ^{
+					 completionBlock(statement);
+				 });
+			 }
+				  withErrorBlock:^(TCError *error){
+					  dispatch_async(dispatch_get_main_queue(), ^{
+						  errorBlock(error);
+					  });
+				  }];
 }
 
 /**
@@ -114,19 +114,19 @@
  */
 - (void) sendStatements:(TCStatementCollection *)statementArray withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs saveStatements:statementArray withOptions:nil
-    withCompletionBlock:^(){
-       dispatch_async(dispatch_get_main_queue(), ^{
-           completionBlock();
-       });
-    }
-    withErrorBlock:^(TCError *error){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            errorBlock(error);
-        });
-    }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs saveStatements:statementArray withOptions:nil
+	withCompletionBlock:^(){
+		dispatch_async(dispatch_get_main_queue(), ^{
+			completionBlock();
+		});
+	}
+		 withErrorBlock:^(TCError *error){
+			 dispatch_async(dispatch_get_main_queue(), ^{
+				 errorBlock(error);
+			 });
+		 }];
 }
 
 /**
@@ -142,21 +142,21 @@
  */
 - (void) getStatementsWithOptions:(TCQueryOptions *)options withCompletionBlock:(void(^)(NSArray *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs queryStatementsWithOptions:options
-        withCompletionBlock:^(NSArray *statementArray){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(statementArray);
-            });
-        }
-        withErrorBlock:^(TCError *error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                errorBlock(error);
-            });
-    }];
-    
-
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs queryStatementsWithOptions:options
+				withCompletionBlock:^(NSArray *statementArray){
+					dispatch_async(dispatch_get_main_queue(), ^{
+						completionBlock(statementArray);
+					});
+				}
+					 withErrorBlock:^(TCError *error){
+						 dispatch_async(dispatch_get_main_queue(), ^{
+							 errorBlock(error);
+						 });
+					 }];
+	
+	
 }
 
 /**
@@ -173,20 +173,20 @@
  */
 - (void) getStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs retrieveStateWithStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration withOptions:options
-        withCompletionBlock:^(NSDictionary *state)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(state);
-            });
-        }
-         withErrorBlock:^(TCError *error){
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 errorBlock(error);
-             });
-         }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs retrieveStateWithStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration withOptions:options
+			  withCompletionBlock:^(NSDictionary *state)
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			completionBlock(state);
+		});
+	}
+				   withErrorBlock:^(TCError *error){
+					   dispatch_async(dispatch_get_main_queue(), ^{
+						   errorBlock(error);
+					   });
+				   }];
 }
 
 /**
@@ -204,19 +204,19 @@
  */
 - (void) setStateWithValue:(NSDictionary *)value withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs saveStateWithValue:value withStateId:stateId withActivityId:(NSString *)activityId withAgent:agent withRegistration:registration withLastSHA1:nil withOptions:options 
-                withCompletionBlock:^(){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock();
-                    });
-                }
-                 withErrorBlock:^(TCError *error){
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         errorBlock(error);
-                     });
-                 }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs saveStateWithValue:value withStateId:stateId withActivityId:(NSString *)activityId withAgent:agent withRegistration:registration withLastSHA1:nil withOptions:options
+		withCompletionBlock:^(){
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completionBlock();
+			});
+		}
+			 withErrorBlock:^(TCError *error){
+				 dispatch_async(dispatch_get_main_queue(), ^{
+					 errorBlock(error);
+				 });
+			 }];
 }
 
 /**
@@ -233,20 +233,20 @@
  */
 - (void) deleteStateWithStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
-    
-    [lrs dropStateWithStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration withOptions:options
-              withCompletionBlock:^()
-                     {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             completionBlock();
-                         });
-                     }
-                   withErrorBlock:^(TCError *error){
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                           errorBlock(error);
-                       });
-                   }];
+	TCLRS *lrs = [[TCLRS alloc] initWithOptions:[_recordStore objectAtIndex:0]];
+	
+	[lrs dropStateWithStateId:stateId withActivityId:activityId withAgent:agent withRegistration:registration withOptions:options
+		  withCompletionBlock:^()
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			completionBlock();
+		});
+	}
+			   withErrorBlock:^(TCError *error){
+				   dispatch_async(dispatch_get_main_queue(), ^{
+					   errorBlock(error);
+				   });
+			   }];
 }
 
 /**
@@ -259,10 +259,10 @@
  */
 - (void) getActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)(NSDictionary *))completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
-        errorBlock(error);
-    });
+	dispatch_async(dispatch_get_main_queue(), ^{
+		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
+		errorBlock(error);
+	});
 }
 
 /**
@@ -276,10 +276,10 @@
  */
 - (void) setActivityProfile:(NSString *)key withValue:(NSDictionary *)value withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
-        errorBlock(error);
-    });
+	dispatch_async(dispatch_get_main_queue(), ^{
+		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
+		errorBlock(error);
+	});
 }
 
 /**
@@ -292,21 +292,11 @@
  */
 - (void) deleteActivityProfile:(NSString *)key withOptions:(NSDictionary *)options withCompletionBlock:(void(^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
-        errorBlock(error);
-    });
+	dispatch_async(dispatch_get_main_queue(), ^{
+		TCError *error = [[TCError alloc] initWithMessage:@"Not Implemented"];
+		errorBlock(error);
+	});
 }
 
 
 @end
-
-
-
-
-
-
-
-
-
-

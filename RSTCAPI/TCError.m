@@ -23,7 +23,7 @@
 
 @interface TCError()
 {
-    NSString *_message;
+	NSString *_message;
 }
 
 @end
@@ -32,13 +32,13 @@
 
 - (id) initWithMessage:(NSString *)message
 {
-    _message = [NSString stringWithFormat:@"%@",message];
-    return self;
+	_message = [NSString stringWithFormat:@"%@",message];
+	return self;
 }
 
 - (NSString *) localizedDescription
 {
-    return _message;
+	return _message;
 }
 
 @end

@@ -23,18 +23,18 @@
 
 @interface TCActivityDefinition()
 {
-    TCLocalizedValues *_name;
-    TCLocalizedValues *_description;
-    NSString *_type;
-    NSDictionary *_extensions;
-    NSString *_interactionType;
-    NSArray *_correctResponsesPattern;
-    NSArray *_choices;
-    NSArray *_scale;
-    NSArray *_target;
-    NSArray *_steps;
-    
-    NSMutableDictionary *_actDefDict;
+	TCLocalizedValues *_name;
+	TCLocalizedValues *_description;
+	NSString *_type;
+	NSDictionary *_extensions;
+	NSString *_interactionType;
+	NSArray *_correctResponsesPattern;
+	NSArray *_choices;
+	NSArray *_scale;
+	NSArray *_target;
+	NSArray *_steps;
+	
+	NSMutableDictionary *_actDefDict;
 }
 
 @end
@@ -43,68 +43,68 @@
 
 - (id) initWithName:(TCLocalizedValues *)name withDescription:(TCLocalizedValues *)description withType:(NSString *)type withExtensions:(NSDictionary *)extensions withInteractionType:(NSString *)interactionType withCorrectResponsesPattern:(NSArray *)correctResponsesPattern withChoices:(NSArray *)choices withScale:(NSArray *)scale withTarget:(NSArray *)target withSteps:(NSArray *)steps
 {
-    if ((self = [super init])) {
-        _name = name;
-        _description = description;
-        _type = type;
-        _extensions = extensions;
-        _interactionType = interactionType;
-        _correctResponsesPattern = correctResponsesPattern;
-        _choices = choices;
-        _scale = scale;
-        _target = target;
-        _steps = steps;
-    }
-    return self;
+	if ((self = [super init])) {
+		_name = name;
+		_description = description;
+		_type = type;
+		_extensions = extensions;
+		_interactionType = interactionType;
+		_correctResponsesPattern = correctResponsesPattern;
+		_choices = choices;
+		_scale = scale;
+		_target = target;
+		_steps = steps;
+	}
+	return self;
 }
 
 - (id) initWithDictionary:(NSDictionary *)dictionary
 {
-    if ((self = [super init])) {
-        _name = [[TCLocalizedValues alloc] initWithDictionary:[dictionary valueForKey:@"name"]];
-        _description = [[TCLocalizedValues alloc] initWithDictionary:[dictionary valueForKey:@"description"]];;
-//        _type = type;
-//        _extensions = extensions;
-//        _interactionType = interactionType;
-//        _correctResponsesPattern = correctResponsesPattern;
-//        _choices = choices;
-//        _scale = scale;
-//        _target = target;
-//        _steps = steps;
-    }
-    return self;
+	if ((self = [super init])) {
+		_name = [[TCLocalizedValues alloc] initWithDictionary:[dictionary valueForKey:@"name"]];
+		_description = [[TCLocalizedValues alloc] initWithDictionary:[dictionary valueForKey:@"description"]];
+//		_type = type;
+//		_extensions = extensions;
+//		_interactionType = interactionType;
+//		_correctResponsesPattern = correctResponsesPattern;
+//		_choices = choices;
+//		_scale = scale;
+//		_target = target;
+//		_steps = steps;
+	}
+	return self;
 }
 
 - (NSDictionary *)dictionary
 {
-    _actDefDict = [[NSMutableDictionary alloc] init];
-    [_actDefDict setValue:[_name dictionary] forKey:@"name"];
-    [_actDefDict setValue:[_description dictionary] forKey:@"description"];
-    [_actDefDict setValue:_type forKey:@"type"];
-    
-    if(_extensions != nil){
-        [_actDefDict setValue:_extensions forKey:@"extensions"];
-    }
-    if(_interactionType != nil){
-        [_actDefDict setValue:_interactionType forKey:@"interactionType"];
-    }
-    if(_correctResponsesPattern != nil){
-        [_actDefDict setValue:_correctResponsesPattern forKey:@"correctResponsesPattern"];
-    }
-    if(_choices != nil){
-        [_actDefDict setValue:_choices forKey:@"choices"];
-    }
-    if(_scale != nil){
-        [_actDefDict setValue:_scale forKey:@"scale"];
-    }
-    if(_target != nil){
-        [_actDefDict setValue:_target forKey:@"target"];
-    }
-    if(_steps != nil){
-        [_actDefDict setValue:_steps forKey:@"steps"];
-    }
-    
-    return [_actDefDict copy];
+	_actDefDict = [[NSMutableDictionary alloc] init];
+	[_actDefDict setValue:[_name dictionary] forKey:@"name"];
+	[_actDefDict setValue:[_description dictionary] forKey:@"description"];
+	[_actDefDict setValue:_type forKey:@"type"];
+	
+	if(_extensions != nil){
+		[_actDefDict setValue:_extensions forKey:@"extensions"];
+	}
+	if(_interactionType != nil){
+		[_actDefDict setValue:_interactionType forKey:@"interactionType"];
+	}
+	if(_correctResponsesPattern != nil){
+		[_actDefDict setValue:_correctResponsesPattern forKey:@"correctResponsesPattern"];
+	}
+	if(_choices != nil){
+		[_actDefDict setValue:_choices forKey:@"choices"];
+	}
+	if(_scale != nil){
+		[_actDefDict setValue:_scale forKey:@"scale"];
+	}
+	if(_target != nil){
+		[_actDefDict setValue:_target forKey:@"target"];
+	}
+	if(_steps != nil){
+		[_actDefDict setValue:_steps forKey:@"steps"];
+	}
+	
+	return [_actDefDict copy];
 }
 
 @end

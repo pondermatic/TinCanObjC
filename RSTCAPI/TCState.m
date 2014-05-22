@@ -24,12 +24,12 @@
 
 @interface TCState()
 {
-    NSString *_stateId;
-    NSDictionary *_contents;
-    NSString *_activityId;
-    TCAgent *_agent;
-    NSString *_registration;
-    NSDate *_updated;
+	NSString *_stateId;
+	NSDictionary *_contents;
+	NSString *_activityId;
+	TCAgent *_agent;
+	NSString *_registration;
+	NSDate *_updated;
 }
 
 @end
@@ -38,42 +38,42 @@
 
 - (id) initWithContents:(NSDictionary *)contents withStateId:(NSString *)stateId withActivityId:(NSString *)activityId withAgent:(TCAgent *)agent withRegistration:(NSString *)registration
 {
-    _stateId = stateId;
-    _contents = contents;
-    _activityId = activityId;
-    _agent = agent;
-    _registration = registration;
-    _updated = [NSDate date];
-    
-    return self;
+	_stateId = stateId;
+	_contents = contents;
+	_activityId = activityId;
+	_agent = agent;
+	_registration = registration;
+	_updated = [NSDate date];
+	
+	return self;
 }
 
 
 - (NSString *) JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_contents
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_contents
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+	
+	return jsonString;
 }
 
 - (NSString *) querystring
 {
-    NSMutableString *qs = [[NSMutableString alloc] init];
-    
-    [qs appendFormat:@"?stateId=%@", _stateId];
-    [qs appendFormat:@"&activityId=%@", _activityId];
-    [qs appendFormat:@"&agent=%@",[[[_agent JSONString] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
-    if(_registration)
-    {
-        [qs appendFormat:@"&registration=%@",_registration];
-    }
-    
-    return [qs copy];
+	NSMutableString *qs = [[NSMutableString alloc] init];
+	
+	[qs appendFormat:@"?stateId=%@", _stateId];
+	[qs appendFormat:@"&activityId=%@", _activityId];
+	[qs appendFormat:@"&agent=%@",[[[_agent JSONString] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionAllowLossy]];
+	if(_registration)
+	{
+		[qs appendFormat:@"&registration=%@",_registration];
+	}
+	
+	return [qs copy];
 }
 
 @end

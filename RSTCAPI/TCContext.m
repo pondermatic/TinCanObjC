@@ -24,12 +24,12 @@
 
 @interface TCContext()
 {
-    NSString *_registration;
-    NSObject *_instructor;
-    NSObject *_team;
-    NSDictionary *_contextActivities;
-    NSDictionary *_extensions;
-    NSMutableDictionary *_contextDict;
+	NSString *_registration;
+	NSObject *_instructor;
+	NSObject *_team;
+	NSDictionary *_contextActivities;
+	NSDictionary *_extensions;
+	NSMutableDictionary *_contextDict;
 }
 @end
 
@@ -37,79 +37,79 @@
 
 - (id)initWithRegistration:(NSString *)registration withInstructor:(NSObject *)instructor withTeam:(NSObject *)team withContextActivities:(NSDictionary *)contextActivities withExtensions:(NSDictionary *)extensions
 {
-    if ((self = [super init])) {
-        _registration = registration;
-        _instructor = instructor;
-        _team = team;
-        _contextActivities = contextActivities;
-        _extensions = extensions;
-    }
-    return self;
+	if ((self = [super init])) {
+		_registration = registration;
+		_instructor = instructor;
+		_team = team;
+		_contextActivities = contextActivities;
+		_extensions = extensions;
+	}
+	return self;
 }
 
 - (id) initWithDictionary:(NSDictionary *)contextDictionary
 {
-    if ((self = [super init])) {
-        
-        NSString *contextRegistration = [contextDictionary objectForKey:@"registration"];
-        NSObject *contextInstructor = [contextDictionary objectForKey:@"instructor"];
-        NSObject *contextTeam = [contextDictionary objectForKey:@"instructor"];
-        NSDictionary *contextActivities = [contextDictionary objectForKey:@"contextActivities"];
-        NSDictionary *contextExtensions = [contextDictionary objectForKey:@"extensions"];
-        
-        if(contextRegistration)
-        {
-            _registration = contextRegistration;
-        }
-        
-        if(contextInstructor)
-        {
-            _instructor = contextInstructor;
-        }
-        
-        if(contextTeam)
-        {
-            _team = contextTeam;
-        }
-        
-        if(contextActivities)
-        {
-            _contextActivities = contextActivities;
-        }
-        
-        if(contextExtensions)
-        {
-            _extensions = contextExtensions;
-        }
-    }
-    return self;
+	if ((self = [super init])) {
+		
+		NSString *contextRegistration = [contextDictionary objectForKey:@"registration"];
+		NSObject *contextInstructor = [contextDictionary objectForKey:@"instructor"];
+		NSObject *contextTeam = [contextDictionary objectForKey:@"instructor"];
+		NSDictionary *contextActivities = [contextDictionary objectForKey:@"contextActivities"];
+		NSDictionary *contextExtensions = [contextDictionary objectForKey:@"extensions"];
+		
+		if(contextRegistration)
+		{
+			_registration = contextRegistration;
+		}
+		
+		if(contextInstructor)
+		{
+			_instructor = contextInstructor;
+		}
+		
+		if(contextTeam)
+		{
+			_team = contextTeam;
+		}
+		
+		if(contextActivities)
+		{
+			_contextActivities = contextActivities;
+		}
+		
+		if(contextExtensions)
+		{
+			_extensions = contextExtensions;
+		}
+	}
+	return self;
 }
 
 - (NSDictionary *)dictionary
 {
-    _contextDict = [[NSMutableDictionary alloc] init];
-    [_contextDict setValue:_registration forKey:@"registration"];
-    [_contextDict setValue:_extensions forKey:@"extensions"];
-    [_contextDict setValue:_contextActivities forKey:@"contextActivities"];
-    return [_contextDict copy];
+	_contextDict = [[NSMutableDictionary alloc] init];
+	[_contextDict setValue:_registration forKey:@"registration"];
+	[_contextDict setValue:_extensions forKey:@"extensions"];
+	[_contextDict setValue:_contextActivities forKey:@"contextActivities"];
+	return [_contextDict copy];
 }
 
 - (NSString *) JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self dictionary]
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+	
+	return jsonString;
 }
 
 - (NSString *)querystring
 {
-    NSString *result = [NSString stringWithFormat:@"Not Implemented Yet"];
-    return result;
+	NSString *result = [NSString stringWithFormat:@"Not Implemented Yet"];
+	return result;
 }
 
 @end

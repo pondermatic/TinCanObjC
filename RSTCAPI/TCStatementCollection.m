@@ -23,7 +23,7 @@
 
 @interface TCStatementCollection()
 {
-    NSMutableArray *_statementArray;
+	NSMutableArray *_statementArray;
 }
 
 
@@ -33,25 +33,25 @@
 
 - (id) init
 {
-    _statementArray = [[NSMutableArray alloc] init];
-    return self;
+	_statementArray = [[NSMutableArray alloc] init];
+	return self;
 }
 
 - (void) addStatement:(TCStatement *)statement
 {
-    [_statementArray addObject:[statement dictionary]];
+	[_statementArray addObject:[statement dictionary]];
 }
 
 - (NSString *)JSONString
 {
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_statementArray
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    
-    NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-    
-    return jsonString;
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_statementArray
+													   options:NSJSONWritingPrettyPrinted
+														 error:&error];
+	
+	NSString *jsonString = [[TCUtil stringByRemovingControlCharacters:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]] stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+	
+	return jsonString;
 }
 
 @end

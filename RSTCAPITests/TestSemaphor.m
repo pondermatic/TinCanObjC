@@ -13,49 +13,49 @@
 @synthesize flags;
 
 +(TestSemaphor *)sharedInstance
-{   
-    static TestSemaphor *sharedInstance = nil;
-    static dispatch_once_t once;
-    
-    dispatch_once(&once, ^{
-        sharedInstance = [TestSemaphor alloc];
-        sharedInstance = [sharedInstance init];
-    });
-    
-    return sharedInstance;
+{
+	static TestSemaphor *sharedInstance = nil;
+	static dispatch_once_t once;
+	
+	dispatch_once(&once, ^{
+		sharedInstance = [TestSemaphor alloc];
+		sharedInstance = [sharedInstance init];
+	});
+	
+	return sharedInstance;
 }
 
 -(id)init
 {
-    self = [super init];
-    if (self != nil) {
-        self.flags = [NSMutableDictionary dictionaryWithCapacity:10];
-    }
-    return self;
+	self = [super init];
+	if (self != nil) {
+		self.flags = [NSMutableDictionary dictionaryWithCapacity:10];
+	}
+	return self;
 }
 
 -(void)dealloc
 {
-    self.flags = nil;
+	self.flags = nil;
 }
 
 -(BOOL)isLifted:(NSString*)key
 {
-    return [self.flags objectForKey:key]!=nil;
+	return [self.flags objectForKey:key]!=nil;
 }
 
 -(void)lift:(NSString*)key
 {
-    [self.flags setObject:@"YES" forKey: key];
+	[self.flags setObject:@"YES" forKey: key];
 }
 
 -(void)waitForKey:(NSString*)key
 {
-    BOOL keepRunning = YES;
-    while (keepRunning && [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1.0]]) {
-        keepRunning = ![[TestSemaphor sharedInstance] isLifted: key];
-    }
-
+	BOOL keepRunning = YES;
+	while (keepRunning && [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:1.0]]) {
+		keepRunning = ![[TestSemaphor sharedInstance] isLifted: key];
+	}
+	
 }
 
 @end
