@@ -33,14 +33,14 @@
 
 @interface TCStatement : NSObject
 
-@property (nonatomic, retain) NSString *statementId;
 @property (nonatomic, retain) TCAgent *actor;
+@property (nonatomic, retain) TCAttachmentCollection *attachments;
+@property (nonatomic, retain) NSString *boundary;
+@property (nonatomic, retain) TCContext *context;
+@property (nonatomic, retain) TCResult *result;
+@property (nonatomic, retain) NSString *statementId;
 @property (nonatomic, retain) NSObject *target;
 @property (nonatomic, retain) TCVerb *verb;
-@property (nonatomic, retain) TCResult *result;
-@property (nonatomic, retain) TCContext *context;
-@property (nonatomic, retain) NSString *boundary;
-@property (nonatomic, retain) TCAttachmentCollection *attachments;
 
 - (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context;
 

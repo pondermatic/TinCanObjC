@@ -24,14 +24,14 @@
 
 @implementation TCStatement
 
-@synthesize statementId = _statementId;
 @synthesize actor = _actor;
+@synthesize attachments = _attachments;
+@synthesize boundary = _boundary;
+@synthesize context = _context;
+@synthesize result = _result;
+@synthesize statementId = _statementId;
 @synthesize target = _target;
 @synthesize verb = _verb;
-@synthesize result = _result;
-@synthesize boundary = _boundary;
-@synthesize attachments = _attachments;
-@synthesize context = _context;
 
 - (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context
 {
