@@ -86,8 +86,14 @@
 			_target = [[TCActivity alloc] initWithDictionary:[statementDict objectForKey:@"object"]];
 		}
 		
-		_context = [[TCContext alloc] initWithDictionary:[statementDict objectForKey:@"context"]];
-		_result = [[TCResult alloc] initWithDictionary:[statementDict objectForKey:@"result"]];
+		if ([statementDict objectForKey:@"result"] != nil) {
+			_result = [[TCResult alloc] initWithDictionary:[statementDict objectForKey:@"result"]];
+		}
+		
+		if ([statementDict objectForKey:@"context"] != nil) {
+			_context = [[TCContext alloc] initWithDictionary:[statementDict objectForKey:@"context"]];
+		}
+		
 		_timestamp = [statementDict objectForKey:@"timestamp"];
 	}
 	return self;
@@ -99,14 +105,19 @@
 	
 	[statement setValue:_statementId forKey:@"id"];
 	[statement setValue:[_actor dictionary] forKey:@"actor"];
+	[statement setValue:[_verb dictionary] forKey:@"verb"];
 	
 	if ([_target class] == [TCActivity class]) {
 		[statement setValue:[(TCActivity *)_target dictionary] forKey:@"object"];
 	}
 	
-	[statement setValue:[_verb dictionary] forKey:@"verb"];
-	[statement setValue:[_result dictionary] forKey:@"result"];
-	[statement setValue:[_context dictionary] forKey:@"context"];
+	if (_result != nil) {
+		[statement setValue:[_result dictionary] forKey:@"result"];
+	}
+	
+	if (_context != nil) {
+		[statement setValue:[_context dictionary] forKey:@"context"];
+	}
 	
 	if (_timestamp != nil) {
 		[statement setValue:_timestamp forKey:@"timestamp"];
