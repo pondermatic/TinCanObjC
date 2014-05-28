@@ -40,6 +40,7 @@
 @property (nonatomic, retain) TCResult *result;
 @property (nonatomic, retain) NSString *statementId;
 @property (nonatomic, retain) NSObject *target;
+@property (nonatomic, retain) NSString *timestamp;
 @property (nonatomic, retain) TCVerb *verb;
 
 - (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context;

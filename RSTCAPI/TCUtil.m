@@ -59,9 +59,7 @@
 	return @"";
 }
 
-
 // from http://www.raywenderlich.com/6475/basic-security-in-ios-5-tutorial-part-1
-
 // This is where the rest of the magic happens.
 // Here we are taking in our string hash, placing that inside of a C Char Array, then parsing it through the SHA256 encryption method.
 + (NSString*)computeSHA256DigestForString:(NSString*)input
@@ -84,4 +82,17 @@
 	
 	return output;
 }
+
++ (NSString *)iso8601FromDate:(NSDate *)date
+{
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSS"];
+	
+	// iOS 5 does not support the ZZZZZ format for -05:00, so we'll format it ourselves
+	NSString *timeZoneOffset = [NSString stringWithFormat:@"%+03d:00", [[formatter timeZone] secondsFromGMT] / 60 / 60];
+	
+	NSString *iso8601 = [NSString stringWithFormat:@"%@%@", [formatter stringFromDate:date], timeZoneOffset];
+	return iso8601;
+}
+
 @end

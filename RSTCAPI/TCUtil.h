@@ -33,4 +33,6 @@
 
 + (NSString*)computeSHA256DigestForString:(NSString*)input;
 
++ (NSString *)iso8601FromDate:(NSDate *)date;
+
 @end

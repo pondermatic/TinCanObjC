@@ -31,6 +31,7 @@
 @synthesize result = _result;
 @synthesize statementId = _statementId;
 @synthesize target = _target;
+@synthesize timestamp = _timestamp;
 @synthesize verb = _verb;
 
 - (id)initWithId:(NSString *)statementId withActor:(TCAgent *)actor withTarget:(NSObject *)target withVerb:(TCVerb *)verb withResult:(TCResult *)result withContext:(TCContext *)context
@@ -87,27 +88,34 @@
 		
 		_context = [[TCContext alloc] initWithDictionary:[statementDict objectForKey:@"context"]];
 		_result = [[TCResult alloc] initWithDictionary:[statementDict objectForKey:@"result"]];
-		
+		_timestamp = [statementDict objectForKey:@"timestamp"];
 	}
 	return self;
 }
 
-
 - (NSDictionary *)dictionary
 {
 	NSMutableDictionary *statement = [[NSMutableDictionary alloc] init];
+	
 	[statement setValue:_statementId forKey:@"id"];
 	[statement setValue:[_actor dictionary] forKey:@"actor"];
+	
 	if ([_target class] == [TCActivity class]) {
 		[statement setValue:[(TCActivity *)_target dictionary] forKey:@"object"];
 	}
+	
 	[statement setValue:[_verb dictionary] forKey:@"verb"];
 	[statement setValue:[_result dictionary] forKey:@"result"];
 	[statement setValue:[_context dictionary] forKey:@"context"];
 	
+	if (_timestamp != nil) {
+		[statement setValue:_timestamp forKey:@"timestamp"];
+	}
+	
 	if (_attachments.count > 0) {
 		[statement setValue:_attachments forKey:@"attachments"];
 	}
+	
 	return [statement copy];
 }
 
@@ -149,4 +157,5 @@
 	
 	return output;
 }
+
 @end
