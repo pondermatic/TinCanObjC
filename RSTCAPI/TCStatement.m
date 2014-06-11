@@ -67,7 +67,7 @@
 	if ((self = [super init])) {
 		NSError* error;
 		NSDictionary *statementDict = [NSJSONSerialization JSONObjectWithData:[statementJSON dataUsingEncoding:NSStringEncodingConversionAllowLossy] options:kNilOptions error:&error];
-		NSLog(@"statement Dict %@", statementDict);
+//		NSLog(@"statement Dict %@", statementDict);
 		
 		NSString *statementId = [statementDict objectForKey:@"id"];
 		if (statementId)

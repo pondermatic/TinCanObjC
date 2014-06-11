@@ -87,7 +87,7 @@
 	
 	[urlRequest setHTTPBody: requestData];
 	
-	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+//	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
 	
 	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		
@@ -123,12 +123,12 @@
  @param {Object} [cfg] Configuration used when saving
  @param {Function} [cfg.callback] Callback to execute on completion
  */
-- (void)saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock  withErrorBlock:(void(^)(TCError *))errorBlock
+- (void)saveStatements:(TCStatementCollection *)statementArray withOptions:(NSDictionary *)options withCompletionBlock:(void (^)())completionBlock withErrorBlock:(void(^)(TCError *))errorBlock
 {
 	NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/statements", _endpoint]]];
 	
 	NSString *requestString = [NSString stringWithFormat:@"%@", [statementArray JSONString], nil];
-	NSLog(@"saveStatements requestString %@", requestString);
+//	NSLog(@"saveStatements requestString %@", requestString);
 	NSData *requestData = [NSData dataWithBytes: [requestString UTF8String] length: [requestString length]];
 	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[requestData length]];
 	
@@ -143,25 +143,23 @@
 	
 	[urlRequest setHTTPBody: requestData];
 	
-	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+//	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
 	
 	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		
 		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		NSString *resourceStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		
-		NSLog(@"HTTP response code: %li", (long)httpResponse.statusCode);
+		NSLog(@"saveStatements - HTTP status code: %li, message body: %@", (long)httpResponse.statusCode, resourceStr);
 		
 		if (httpResponse.statusCode == 200) {
-			NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			NSLog(@"saveStatements 200 - %@", responseStr);
 			dispatch_async(dispatch_get_main_queue(), ^{
 				completionBlock();
 			});
 		}
 		else if (httpResponse.statusCode == 400) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				NSString* errorStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", errorStr]];
+				TCError *error400 = [[TCError alloc] initWithMessage:[NSString stringWithFormat:@"%@", resourceStr]];
 				errorBlock(error400);
 			});
 		} else {
@@ -312,7 +310,7 @@
 	[urlRequest setHTTPMethod:@"GET"];
 	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 	
-	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+//	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
 	
 	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		
@@ -380,7 +378,7 @@
 	
 	[urlRequest setHTTPBody: requestData];
 	
-	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+//	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
 	
 	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		
@@ -434,7 +432,7 @@
 	[urlRequest setHTTPMethod:@"DELETE"];
 	[urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 	
-	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
+//	NSLog(@"request headers : %@", urlRequest.allHTTPHeaderFields);
 	
 	[NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 		
