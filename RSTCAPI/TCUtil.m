@@ -89,7 +89,7 @@
 	[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSS"];
 	
 	// iOS 5 does not support the ZZZZZ format for -05:00, so we'll format it ourselves
-	NSString *timeZoneOffset = [NSString stringWithFormat:@"%+03ld:00", [[formatter timeZone] secondsFromGMT] / 60 / 60];
+	NSString *timeZoneOffset = [NSString stringWithFormat:@"%+03d:00", (int)[[formatter timeZone] secondsFromGMT] / 60 / 60];
 	
 	NSString *iso8601 = [NSString stringWithFormat:@"%@%@", [formatter stringFromDate:date], timeZoneOffset];
 	return iso8601;
